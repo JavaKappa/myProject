@@ -9,9 +9,8 @@ import java.util.Collection;
 public class Resume {
     private String fullName;
     private String objective;
-    private String wantedObjective;
     private Collection<WorkPlace> expierence;
     private Collection<String> achievement;
-    private String qualification;
+    private Collection<String> qualification;
     private String education;
 }
