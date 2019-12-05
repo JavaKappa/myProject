@@ -1,8 +1,9 @@
-import ru.webapp.model.Resume;
+import ru.webapp.model.Contact;
+import ru.webapp.model.ContactType;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello World " + " 2i=)");
-        System.out.println(Resume.class);
+        Contact contact = new Contact(ContactType.PHONE_NUMBER, "+79780987204");
+        System.out.println(contact.getContactType() + " " + contact.getValue());
     }
 }
