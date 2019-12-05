@@ -1,7 +1,9 @@
 package ru.webapp.model;
 
 public class Contact {
-    ContactType contactType;
+    private ContactType contactType;
+    private String value;
+
 
     public Contact(ContactType contactType) {
         this.contactType = contactType;
