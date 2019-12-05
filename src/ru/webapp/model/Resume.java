@@ -8,9 +8,7 @@ import java.util.Collection;
  */
 public class Resume {
     private String fullName;
-    private String objective;
     private Collection<WorkPlace> expierence;
-    private Collection<String> achievement;
-    private Collection<String> qualification;
-    private String education;
+    private Collection<Section> sections;
+    private Collection<Contact> contacts;
 }

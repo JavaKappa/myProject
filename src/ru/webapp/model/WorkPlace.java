@@ -8,7 +8,7 @@ import java.util.Date;
  */
 class WorkPlace {
     private String companyName;
-    private String linkToSite;
+    private Link linkToSite;
     private int salary;
     private Date firstWorksMonth;
     private Date lastWorksMonth;
