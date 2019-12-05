@@ -9,5 +9,5 @@ import java.util.Collection;
 public class Organization {
     private String companyName;
     private Link organizationWebSite;
-    private Collection<Period> periods;
+    private Collection<OrganizationPeriod> organizationPeriods;
 }
