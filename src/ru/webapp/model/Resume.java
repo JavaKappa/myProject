@@ -12,4 +12,12 @@ public class Resume {
     private String homePage;
     private Collection<Section> sections;
     private Collection<Contact> contacts;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getHomePage() {
+        return homePage;
+    }
 }
