@@ -53,6 +53,6 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public int size() {
-        return resumes.length;
+        return Arrays.stream(resumes).filter(Objects::nonNull).toArray().length;
     }
 }
