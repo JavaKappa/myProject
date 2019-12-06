@@ -24,7 +24,7 @@ public class ArrayStorage implements IStorage {
     @Override
     public void update(Resume resume) {
         for (int i = 0; i < resumes.length; i++) {
-            if (resumes[i].getFullName().equals(resume.getFullName())) {
+            if (resumes[i].getUuid().equals(resume.getUuid())) {
                 resumes[i] = resume;
             }
         }
@@ -32,11 +32,20 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public Resume load(String uuid) {
-        return resumes[Integer.parseInt(uuid)];
+        for (Resume resume : resumes) {
+            if (resume.getUuid().equals(uuid)) {
+                return resume;
+            }
+        }
+        return null;
     }
     @Override
     public void delete(String uuid) {
-        resumes[Integer.parseInt(uuid)] = null;
+        for (Resume resume : resumes) {
+            if (resume.getUuid().equals(uuid)) {
+                resume = null;
+            }
+        }
     }
 
     @Override
