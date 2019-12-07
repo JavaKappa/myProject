@@ -13,12 +13,13 @@ public class ArrayStorage implements IStorage {
     private Resume[] resumes = new Resume[100];
 
     @Override
-    public void save(Resume resume) {
+    public void save(Resume resume) throws Exception {
         for (int i = 0; i < resumes.length; i++) {
             if (resumes[i] == null) {
                 resumes[i] = resume;
             }
         }
+        throw new Exception("array is full");
     }
 
     @Override
@@ -41,9 +42,9 @@ public class ArrayStorage implements IStorage {
     }
     @Override
     public void delete(String uuid) {
-        for (Resume resume : resumes) {
-            if (resume.getUuid().equals(uuid)) {
-                resume = null;
+        for (int i = 0; i < resumes.length; i++) {
+            if (resumes[i].getUuid().equals(uuid)) {
+                resumes[i] = null;
             }
         }
     }

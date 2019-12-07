@@ -9,7 +9,7 @@ import java.util.Collection;
  * 06.12.2019
  */
 public interface IStorage {
-    void save(Resume resume);
+    void save(Resume resume) throws Exception;
 
     void update(Resume resume);
 
