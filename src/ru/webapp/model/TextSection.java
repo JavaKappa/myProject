@@ -8,4 +8,9 @@ import java.util.List;
  */
 public class TextSection extends Section {
     private List<String> values;
+
+    public TextSection(SectionType sectionType, List<String> values) {
+        this.sectionType = sectionType;
+        this.values = values;
+    }
 }

@@ -1,5 +1,5 @@
 package ru.webapp.model;
 
-public class Section {
+public abstract class Section {
     protected SectionType sectionType;
 }

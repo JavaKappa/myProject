@@ -42,4 +42,12 @@ public class Resume {
     public int hashCode() {
         return uuid.hashCode();
     }
+
+    public void addSection(Section section) {
+        sections.add(section);
+    }
+
+    public void addContacts(Contact contact) {
+        contacts.add(contact);
+    }
 }

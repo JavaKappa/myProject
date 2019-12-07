@@ -10,4 +10,10 @@ import java.util.List;
 public class TextSectionWithTitle extends Section {
     private String title;
     private String comment;
+
+    public TextSectionWithTitle(SectionType sectionType, String title, String comment) {
+        this.sectionType = sectionType;
+        this.title = title;
+        this.comment = comment;
+    }
 }
