@@ -6,7 +6,7 @@ import ru.webapp.model.Resume;
  * Капу пк
  * 08.12.2019
  */
-public class WebAppException extends Exception {
+public class WebAppException extends RuntimeException {
     Resume resume = null;
     String uuid = null;
 
