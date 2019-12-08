@@ -11,11 +11,11 @@ import java.util.Collection;
 public interface IStorage {
     void save(Resume resume) throws Exception;
 
-    void update(Resume resume);
+    void update(Resume resume) throws WebAppException;
 
     Resume load(String uuid);
 
-    void delete(String uuid);
+    void delete(String uuid) throws WebAppException;
 
     void clear();
 
