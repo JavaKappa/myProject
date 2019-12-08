@@ -1,5 +1,6 @@
 package ru.webapp.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -16,8 +17,8 @@ public class Resume {
     private String fullName;
     private String location;
     private String homePage;
-    private Collection<Section> sections;
-    private Collection<Contact> contacts;
+    private Collection<Section> sections = new ArrayList<>();
+    private Collection<Contact> contacts = new ArrayList<>();
 
     public Resume(String fullName, String location) {
         this(UUID.randomUUID().toString(), fullName, location);
@@ -47,7 +48,7 @@ public class Resume {
         sections.add(section);
     }
 
-    public void addContacts(Contact contact) {
+    public void addContact(Contact contact) {
         contacts.add(contact);
     }
 }

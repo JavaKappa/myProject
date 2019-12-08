@@ -1,33 +1,61 @@
-package test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import ru.webapp.model.Contact;
+import ru.webapp.model.ContactType;
+import ru.webapp.model.Resume;
+import storage.ArrayStorage;
 
-class ArrayStorageTest {
 
-    @org.junit.jupiter.api.Test
-    void save() {
+public class ArrayStorageTest {
+    private Resume r1, r2, r3;
+
+    private ArrayStorage storage = new ArrayStorage();
+     {
+        r1 = new Resume("Игорь", "Allworld");
+        r1.addContact(new Contact(ContactType.PHONE_NUMBER, "+02"));
+        r2 = new Resume("Ccfyz", "armeniya");
+        r2.addContact(new Contact(ContactType.PHONE_NUMBER, "+04"));
+        r2.addContact(new Contact(ContactType.EMAIL, "gmalru"));
+        r2.addContact(new Contact(ContactType.PHONE_NUMBER, "+04"));
+        r3 = new Resume("gogi", "gruziya");
+        r3.addContact(new Contact(ContactType.PHONE_NUMBER, "+00"));
+        r3.addContact(new Contact(ContactType.SKYPE, "+skype00"));
     }
 
-    @org.junit.jupiter.api.Test
-    void update() {
+    @Before
+    public void before() throws Exception {
+        storage.clear();
+        storage.save(r1);
+        storage.save(r2);
+        storage.save(r3);
+    }
+    @Test
+    public void save() {
     }
 
-    @org.junit.jupiter.api.Test
-    void load() {
+    @Test
+    public void update() {
     }
 
-    @org.junit.jupiter.api.Test
-    void delete() {
+    @Test
+    public void load() {
     }
 
-    @org.junit.jupiter.api.Test
-    void clear() {
+    @Test
+    public void delete() {
     }
 
-    @org.junit.jupiter.api.Test
-    void getAllSorted() {
+    @Test
+    public void clear() {
     }
-    @org.junit.jupiter.api.Test
-    void size() {
+
+    @Test
+    public void getAllSorted() {
+    }
+    @Test
+    public void size() {
+        Assert.assertEquals( 3, storage.size());
     }
 }

@@ -17,6 +17,7 @@ public class ArrayStorage implements IStorage {
         for (int i = 0; i < resumes.length; i++) {
             if (resumes[i] == null) {
                 resumes[i] = resume;
+                return;
             }
         }
         throw new Exception("array is full");
