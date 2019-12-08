@@ -44,6 +44,12 @@ public class Resume {
         return uuid.hashCode();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+
     public void addSection(Section section) {
         sections.add(section);
     }

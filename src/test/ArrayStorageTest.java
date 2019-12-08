@@ -33,14 +33,31 @@ public class ArrayStorageTest {
     }
     @Test
     public void save() {
+        try {
+            storage.save(r1);
+            Assert.fail();
+            storage.save(new Resume("22", ""));
+            Assert.assertEquals(4, storage.size());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     @Test
     public void update() {
+//        Resume resume = new Resume(r2.getUuid(), "Александр", "3");
+//        storage.update(resume);
+//        Assert.assertEquals("Александр", storage.load(r2.getUuid()).getFullName());
+        storage.update(r1);
+        Assert.fail();
     }
 
     @Test
     public void load() {
+        Resume r = storage.load(r1.getUuid());
+        Assert.assertEquals(r1.getFullName(), r.getFullName());
+        Assert.assertEquals(r1.getUuid(), r.getUuid());
+        Assert.assertEquals(r1.getHomePage(), r.getHomePage());
     }
 
     @Test
@@ -52,6 +69,10 @@ public class ArrayStorageTest {
 
     @Test
     public void clear() {
+
+        Assert.assertEquals(3, storage.size());
+        storage.clear();
+        Assert.assertEquals(0, storage.size());
     }
 
     @Test

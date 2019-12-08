@@ -4,17 +4,23 @@ import ru.webapp.model.Resume;
 
 import java.text.ParseException;
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * Капу пк
  * 06.12.2019
  */
 public class ArrayStorage implements IStorage {
-    private Resume[] resumes = new Resume[100];
+    private static final int LIMIT = 100;
+    private Resume[] resumes = new Resume[LIMIT];
 
     @Override
     public void save(Resume resume) throws Exception {
-        for (int i = 0; i < resumes.length; i++) {
+        if (load(resume.getUuid()) != null) {
+            throw new IllegalStateException("Already in storage, but you can try to update");
+        }
+
+        for (int i = 0; i < LIMIT; i++) {
             if (resumes[i] == null) {
                 resumes[i] = resume;
                 return;
@@ -25,8 +31,11 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public void update(Resume resume) {
-        for (int i = 0; i < resumes.length; i++) {
-            if (resumes[i].getUuid().equals(resume.getUuid())) {
+        for (int i = 0; i < LIMIT; i++) {
+            if (resumes[i] != null && resumes[i].getUuid().equals(resume.getUuid())) {
+                if (resume.equals(resumes[i])) {
+                    throw new IllegalStateException("nothing to added");
+                }
                 resumes[i] = resume;
             }
         }
@@ -43,7 +52,7 @@ public class ArrayStorage implements IStorage {
     }
     @Override
     public void delete(String uuid) {
-        for (int i = 0; i < resumes.length; i++) {
+        for (int i = 0; i < LIMIT; i++) {
             if (resumes[i] != null && resumes[i].getUuid().equals(uuid)) {
                 resumes[i] = null;
             }
