@@ -20,12 +20,8 @@ public class ArrayStorage implements IStorage {
         LOGGER.info("Save resume witRh uuid: " + resume.getUuid());
         int idx = getIndex(resume.getUuid());
         if (idx != -1) {
-            try {
-                throw new WebAppException("this resume already in use");
-            } catch (Exception e) {
-                LOGGER.severe("this resume already in use");
-
-            }
+            LOGGER.severe("this resume already in use");
+            throw new WebAppException("this resume already in use");
         }
         resumes[size++] = resume;
 
