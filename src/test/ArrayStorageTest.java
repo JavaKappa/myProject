@@ -45,6 +45,9 @@ public class ArrayStorageTest {
 
     @Test
     public void delete() {
+         storage.delete(r1.getUuid());
+         Assert.assertEquals(2, storage.size());
+        Assert.assertNull(storage.load(r1.getUuid()));
     }
 
     @Test
