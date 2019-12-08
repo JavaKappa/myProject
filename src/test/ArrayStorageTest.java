@@ -45,11 +45,16 @@ public class ArrayStorageTest {
 
     @Test
     public void update() {
-//        Resume resume = new Resume(r2.getUuid(), "Александр", "3");
-//        storage.update(resume);
-//        Assert.assertEquals("Александр", storage.load(r2.getUuid()).getFullName());
-        storage.update(r1);
-        Assert.fail();
+        Resume resume = new Resume(r2.getUuid(), "Александр", "3");
+        storage.update(resume);
+        Assert.assertEquals("Александр", storage.load(r2.getUuid()).getFullName());
+        try {
+
+            storage.update(r1);
+            Assert.fail();
+        } catch (Exception e) {
+
+        }
     }
 
     @Test

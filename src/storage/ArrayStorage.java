@@ -12,19 +12,25 @@ import java.util.function.Predicate;
  */
 public class ArrayStorage implements IStorage {
     private static final int LIMIT = 100;
+    private int idx;
     private Resume[] resumes = new Resume[LIMIT];
 
     @Override
     public void save(Resume resume) throws Exception {
-        if (load(resume.getUuid()) != null) {
-            throw new IllegalStateException("Already in storage, but you can try to update");
-        }
 
+        idx = -1;
         for (int i = 0; i < LIMIT; i++) {
-            if (resumes[i] == null) {
-                resumes[i] = resume;
-                return;
+            if (resumes[i] != null) {
+                if (resume.getUuid().equals(resumes[i].getUuid())) {
+                    throw new IllegalStateException("Already in storage, but you can try to update");
+                }
+            } else {
+                idx = i;
             }
+        }
+        if (idx != -1) {
+            resumes[idx] = resume;
+            return;
         }
         throw new Exception("array is full");
     }
