@@ -1,6 +1,7 @@
 package storage;
 
 import ru.webapp.model.Resume;
+
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -28,74 +29,42 @@ public class ArrayStorage implements IStorage {
     }
 
     @Override
-    public void update(Resume resume){
+    public void update(Resume resume) {
         LOGGER.info("trying update " + resume.getUuid());
-        for (int i = 0; i < LIMIT; i++) {
-            if (resumes[i] == null) {
-                try {
-                    throw new WebAppException("this resume already in use");
-                } catch (Exception e) {
-                    LOGGER.severe("this resume already in use");
-                }
-            }
-            if (resumes[i].getUuid().equals(resume.getUuid())) {
-                resumes[i] = resume;
-                return;
-            }
+        int idx = getIndex(resume.getUuid());
+        if (idx == -1) {
+            LOGGER.severe("Resume does not exists");
+            throw new WebAppException("Resume does not exists");
         }
-        try {
-            throw new WebAppException("this resume already in use");
-        } catch (Exception e) {
-            LOGGER.severe("this resume already in use");
+        LOGGER.info("Resume updating was success!");
+        resumes[idx] = resume;
 
-        }
     }
 
     @Override
     public Resume load(String uuid) {
         LOGGER.info("trying load" + uuid);
-        for (int i = 0; i < LIMIT; i++) {
-            if (resumes[i] == null) {
-                LOGGER.info("this resume does not exist");
-                return null;
-            }
-            if (resumes[i].getUuid().equals(uuid)) {
-                return resumes[i];
-            }
+        int idx = getIndex(uuid);
+        if (idx == -1) {
+            LOGGER.severe("Resume does  not exists");
+            throw new WebAppException("Resume does  not exists");
         }
-        LOGGER.info("this resume does not exist");
-        return null;
+        return resumes[idx];
     }
+
     @Override
     public void delete(String uuid) throws WebAppException {
         LOGGER.info("DELIting resume with uuid " + uuid);
-        for (int i = 0; i < LIMIT; i++) {
-            if (resumes[i] == null) {
-                try {
-                    throw new WebAppException("this resume already in use");
-                } catch (Exception e) {
-                    LOGGER.severe("this resume already in use");
-
-                }
-            }
-            if (resumes[i].getUuid().equals(uuid)) {
-                resumes[i] = null;
-                size--;
-                int k = -1;
-                for (int j = i + 1; j < LIMIT; j++) {
-                    if (resumes[j] == null) {
-                        break;
-                    }
-                    resumes[i] = resumes[j];
-                    i++;
-                    k = j;
-                }
-                if (k != -1) {
-                    resumes[k] = null;
-                }
-                return;
-            }
+        int idx = getIndex(uuid);
+        if (idx == -1) {
+            LOGGER.severe("Resume does not exists");
+            throw new WebAppException("Resume does not exists");
         }
+        int numMoved = size - idx - 1;
+        if (numMoved > 0)
+            System.arraycopy(resumes, idx + 1, resumes, idx,
+                    numMoved);
+        resumes[--size] = null;
     }
 
     @Override
@@ -107,12 +76,14 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public Collection<Resume> getAllSorted() {
-        return Arrays.stream(resumes).filter(Objects::nonNull).sorted(Comparator.comparing(Resume::getFullName)).collect(Collectors.toList());
+        List<Resume> list = Arrays.asList(Arrays.copyOf(resumes, size));
+        list.sort(Comparator.comparing(Resume::getFullName));
+        return list;
     }
 
     @Override
     public int size() {
-       return size;
+        return size;
     }
 
     private int getIndex(String uuid) {
