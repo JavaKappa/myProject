@@ -46,10 +46,9 @@ public class ArrayStorageTest {
 
     @Test
     public void load() {
-        Resume r = storage.load(r1.getUuid());
-        Assert.assertEquals(r1.getFullName(), r.getFullName());
-        Assert.assertEquals(r1.getUuid(), r.getUuid());
-        Assert.assertEquals(r1.getHomePage(), r.getHomePage());
+       Assert.assertEquals(r1, storage.load(r1.getUuid()));
+       Assert.assertEquals(r2, storage.load(r2.getUuid()));
+       Assert.assertEquals(r3, storage.load(r3.getUuid()));
     }
 
     @Test
@@ -67,6 +66,31 @@ public class ArrayStorageTest {
         Assert.assertEquals(0, storage.size());
     }
 
+    @Test
+    public void update() {
+        r2.setFullName("Updated");
+        storage.update(r2);
+        Assert.assertEquals(r2, storage.load(r2.getUuid()));
+    }
+
+    @Test(expected = WebAppException.class)
+    public void testLoadNotExistFile() {
+        storage.load("uuid");
+
+    }
+    @Test(expected = WebAppException.class)
+    public void testUdpateNotExistFile() {
+        storage.update(new Resume("1113", "3"));
+    }
+
+    @Test(expected = WebAppException.class)
+    public void testDeleteNotExistFile() {
+        storage.delete("1113");
+    }
+    @Test(expected = WebAppException.class)
+    public void testSaveAlreadyInUse() {
+        storage.save(r1);
+    }
     @Test
     public void getAllSorted() {
         ArrayList<Resume> arrayList = new ArrayList<>();
