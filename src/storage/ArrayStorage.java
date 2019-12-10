@@ -67,6 +67,8 @@ public class ArrayStorage implements IStorage {
         resumes[--size] = null;
     }
 
+    //added comment to check my git now
+
     @Override
     public void clear() {
         Arrays.fill(resumes, null);
