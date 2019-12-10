@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  * Капу пк
  * 06.12.2019
  */
-public class ArrayStorage implements IStorage {
+public class ArrayStorage extends AbstractStorage {
     private static final int LIMIT = 100;
     private int size = 0;
     private Resume[] resumes = new Resume[LIMIT];
