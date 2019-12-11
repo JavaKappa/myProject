@@ -4,7 +4,6 @@ import ru.webapp.model.Resume;
 
 import java.util.*;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * Капу пк
@@ -14,51 +13,40 @@ public class ArrayStorage extends AbstractStorage {
     private static final int LIMIT = 100;
     private int size = 0;
     private Resume[] resumes = new Resume[LIMIT];
-    private static Logger LOGGER = Logger.getLogger(ArrayStorage.class.getName());
 
     @Override
-    public void save(Resume resume) {
-        LOGGER.info("Save resume witRh uuid: " + resume.getUuid());
+    public void doSave(Resume resume) {
         int idx = getIndex(resume.getUuid());
         if (idx != -1) {
-            LOGGER.severe("this resume already in use");
-            throw new WebAppException("this resume already in use");
+            doException("This resume already in use");
         }
         resumes[size++] = resume;
-
     }
 
     @Override
-    public void update(Resume resume) {
-        LOGGER.info("trying update " + resume.getUuid());
+    public void doUpdate(Resume resume) {
         int idx = getIndex(resume.getUuid());
         if (idx == -1) {
-            LOGGER.severe("Resume does not exists");
-            throw new WebAppException("Resume does not exists");
+            doException("Resume does not exists");
         }
-        LOGGER.info("Resume updating was success!");
         resumes[idx] = resume;
-
     }
 
+
     @Override
-    public Resume load(String uuid) {
-        LOGGER.info("trying load" + uuid);
+    public Resume doLoad(String uuid) {
         int idx = getIndex(uuid);
         if (idx == -1) {
-            LOGGER.severe("Resume does  not exists");
-            throw new WebAppException("Resume does  not exists");
+            doException("Resume does  not exists");
         }
         return resumes[idx];
     }
 
     @Override
-    public void delete(String uuid) throws WebAppException {
-        LOGGER.info("DELIting resume with uuid " + uuid);
+    public void doDelete(String uuid) throws WebAppException {
         int idx = getIndex(uuid);
         if (idx == -1) {
-            LOGGER.severe("Resume does not exists");
-            throw new WebAppException("Resume does not exists");
+            doException("Resume does not exists");
         }
         int numMoved = size - idx - 1;
         if (numMoved > 0)
@@ -70,14 +58,13 @@ public class ArrayStorage extends AbstractStorage {
     //added comment to check my git now
 
     @Override
-    public void clear() {
+    public void doClear() {
         Arrays.fill(resumes, null);
-        LOGGER.info("Deleted all resumes.");
         size = 0;
     }
 
     @Override
-    public Collection<Resume> getAllSorted() {
+    public Collection<Resume> doGetAllSorted() {
         List<Resume> list = Arrays.asList(Arrays.copyOf(resumes, size));
         list.sort(Comparator.comparing(Resume::getFullName));
         return list;
