@@ -5,7 +5,9 @@ import org.junit.Test;
 import ru.webapp.model.Contact;
 import ru.webapp.model.ContactType;
 import ru.webapp.model.Resume;
+import storage.AbstractStorage;
 import storage.ArrayStorage;
+import storage.CollectionStorage;
 import storage.WebAppException;
 
 import java.util.ArrayList;
@@ -15,7 +17,8 @@ import java.util.Comparator;
 public class ArrayStorageTest {
     private Resume r1, r2, r3,r4, r5, r6, r7, r8, r9;
 
-    private ArrayStorage storage = new ArrayStorage();
+//    private ArrayStorage storage = new ArrayStorage();
+    private AbstractStorage storage = new CollectionStorage();
 
     {
         r1 = new Resume("Игорь", "Allworld");
