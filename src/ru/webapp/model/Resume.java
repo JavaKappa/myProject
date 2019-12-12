@@ -14,7 +14,7 @@ public class Resume {
         return uuid;
     }
 
-    private String uuid;
+    private final String uuid;
     private String fullName;
     private String location;
     private String homePage;
@@ -23,10 +23,6 @@ public class Resume {
 
     public Resume(String fullName, String location) {
         this(UUID.randomUUID().toString(), fullName, location);
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public void setFullName(String fullName) {
@@ -68,24 +64,21 @@ public class Resume {
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, fullName, location, homePage, sections, contacts);
+        return Objects.hash(uuid);
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
+
             return true;
         }
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
         final Resume other = (Resume) obj;
-        return Objects.equals(this.uuid, other.uuid)
-                && Objects.equals(this.fullName, other.fullName)
-                && Objects.equals(this.location, other.location)
-                && Objects.equals(this.homePage, other.homePage)
-                && Objects.equals(this.sections, other.sections)
-                && Objects.equals(this.contacts, other.contacts);
+        return Objects.equals(hashCode(), obj.hashCode())
+                && Objects.equals(this.uuid, other.uuid);
     }
 
 

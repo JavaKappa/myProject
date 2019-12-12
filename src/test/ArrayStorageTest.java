@@ -6,12 +6,12 @@ import ru.webapp.model.Contact;
 import ru.webapp.model.ContactType;
 import ru.webapp.model.Resume;
 import storage.AbstractStorage;
-import storage.ArrayStorage;
 import storage.CollectionStorage;
 import storage.WebAppException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+
 
 
 public class ArrayStorageTest {
@@ -39,7 +39,7 @@ public class ArrayStorageTest {
     }
 
     @Before
-    public void before() throws Exception {
+    public void before() {
         storage.clear();
         storage.save(r1);
         storage.save(r2);
@@ -52,6 +52,7 @@ public class ArrayStorageTest {
        Assert.assertEquals(r1, storage.load(r1.getUuid()));
        Assert.assertEquals(r2, storage.load(r2.getUuid()));
        Assert.assertEquals(r3, storage.load(r3.getUuid()));
+
     }
 
     @Test
@@ -105,7 +106,7 @@ public class ArrayStorageTest {
     }
 
     @Test
-    public void size() throws Exception {
+    public void size() {
         Assert.assertEquals(3, storage.size());
         storage.save(r4);
         storage.save(r5);

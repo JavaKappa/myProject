@@ -5,8 +5,7 @@ import ru.webapp.model.Resume;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
-import java.util.function.Consumer;
+
 
 public class CollectionStorage extends AbstractStorage {
     private ArrayList<Resume> storage = new ArrayList<>();
@@ -53,12 +52,7 @@ public class CollectionStorage extends AbstractStorage {
 
     @Override
     public Collection<Resume> doGetAllSorted() {
-        storage.sort(new Comparator<Resume>() {
-            @Override
-            public int compare(Resume o1, Resume o2) {
-                return o1.getFullName().compareTo(o2.getFullName());
-            }
-        });
+        storage.sort(Comparator.comparing(Resume::getFullName));
         return storage;
     }
 
