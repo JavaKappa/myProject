@@ -7,18 +7,21 @@ import ru.webapp.model.ContactType;
 import ru.webapp.model.Resume;
 import storage.AbstractStorage;
 import storage.CollectionStorage;
+import storage.MapStorage;
 import storage.WebAppException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-
+import java.util.Set;
+import java.util.TreeSet;
 
 
 public class ArrayStorageTest {
     private Resume r1, r2, r3,r4, r5, r6, r7, r8, r9;
 
 //    private ArrayStorage storage = new ArrayStorage();
-    private AbstractStorage storage = new CollectionStorage();
+//    private AbstractStorage storage = new CollectionStorage();
+    private AbstractStorage storage = new MapStorage();
 
     {
         r1 = new Resume("Игорь", "Allworld");
@@ -83,7 +86,7 @@ public class ArrayStorageTest {
 
     }
     @Test(expected = WebAppException.class)
-    public void testUdpateNotExistFile() {
+    public void testUpdateNotExistFile() {
         storage.update(new Resume("1113", "3"));
     }
 
@@ -97,11 +100,10 @@ public class ArrayStorageTest {
     }
     @Test
     public void getAllSorted() {
-        ArrayList<Resume> arrayList = new ArrayList<>();
+        Set<Resume> arrayList = new TreeSet<>();
         arrayList.add(r1);
         arrayList.add(r2);
         arrayList.add(r3);
-        arrayList.sort(Comparator.comparing(Resume::getFullName));
         Assert.assertEquals(arrayList, storage.getAllSorted());
     }
 

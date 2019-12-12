@@ -9,7 +9,7 @@ import java.util.UUID;
  * Капу пк
  * 04.12.2019
  */
-public class Resume {
+public class Resume implements Comparable<Resume>{
     public String getUuid() {
         return uuid;
     }
@@ -82,4 +82,8 @@ public class Resume {
     }
 
 
+    @Override
+    public int compareTo(Resume o) {
+        return getFullName().compareTo(o.getFullName());
+    }
 }
