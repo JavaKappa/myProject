@@ -2,18 +2,20 @@ package storage;
 
 import ru.webapp.model.Resume;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
 import java.util.logging.Logger;
 
 abstract public class AbstractStorage implements IStorage{
     protected Logger logger = Logger.getLogger(ArrayStorage.class.getName());
 
+    public abstract boolean exist(String uuid);
+
     @Override
     public void save(Resume resume) {
         logger.info("Save resume witRh uuid: " + resume.getUuid());
+        if (exist(resume.getUuid())) {
+            doException("Resume already exist");
+        }
         doSave(resume);
     }
 
@@ -23,7 +25,9 @@ abstract public class AbstractStorage implements IStorage{
     @Override
     public void update(Resume resume) {
         logger.info("trying update " + resume.getUuid());
-        doUpdate(resume);
+        if (!exist(resume.getUuid())) {
+            doException("Resume does not exist");
+        }
         logger.info("Resume updating was success!");
     }
 
@@ -33,6 +37,9 @@ abstract public class AbstractStorage implements IStorage{
     @Override
     public Resume load(String uuid) {
         logger.info("trying load" + uuid);
+        if (!exist(uuid)) {
+            doException("Resume  does not exist");
+        }
         return doLoad(uuid);
     }
 
@@ -42,6 +49,9 @@ abstract public class AbstractStorage implements IStorage{
     @Override
     public void delete(String uuid) throws WebAppException {
         logger.info("Delete resume with uuid " + uuid);
+        if (!exist(uuid)) {
+            doException("Resume does not exist");
+        }
         doDelete(uuid);
     }
 

@@ -15,20 +15,27 @@ public class ArrayStorage extends AbstractStorage {
     private Resume[] resumes = new Resume[LIMIT];
 
     @Override
+    public boolean exist(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (resumes[i] == null){
+                return false;
+            }
+            if (resumes[i].getUuid().equals(uuid)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void doSave(Resume resume) {
         int idx = getIndex(resume.getUuid());
-        if (idx != -1) {
-            doException("This resume already in use");
-        }
         resumes[size++] = resume;
     }
 
     @Override
     public void doUpdate(Resume resume) {
         int idx = getIndex(resume.getUuid());
-        if (idx == -1) {
-            doException("Resume does not exists");
-        }
         resumes[idx] = resume;
     }
 
@@ -36,18 +43,12 @@ public class ArrayStorage extends AbstractStorage {
     @Override
     public Resume doLoad(String uuid) {
         int idx = getIndex(uuid);
-        if (idx == -1) {
-            doException("Resume does  not exists");
-        }
         return resumes[idx];
     }
 
     @Override
     public void doDelete(String uuid) throws WebAppException {
         int idx = getIndex(uuid);
-        if (idx == -1) {
-            doException("Resume does not exists");
-        }
         int numMoved = size - idx - 1;
         if (numMoved > 0)
             System.arraycopy(resumes, idx + 1, resumes, idx,
