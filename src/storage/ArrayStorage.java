@@ -13,44 +13,55 @@ public class ArrayStorage extends AbstractStorage {
     private int size = 0;
     private Resume[] resumes = new Resume[LIMIT];
 
+    private int index = -1;
+
     @Override
     public boolean exist(String uuid) {
         for (int i = 0; i < size; i++) {
             if (resumes[i] == null){
+                index = -1;
                 return false;
             }
             if (resumes[i].getUuid().equals(uuid)) {
+                index = i;
                 return true;
             }
         }
+        index = -1;
         return false;
     }
 
     @Override
     public void doSave(Resume resume) {
-        int idx = getIndex(resume.getUuid());
         resumes[size++] = resume;
     }
 
     @Override
     public void doUpdate(Resume resume) {
-        int idx = getIndex(resume.getUuid());
-        resumes[idx] = resume;
+//        int idx = getIndex(resume.getUuid());
+//        resumes[idx] = resume;
+        resumes[index] = resume;
     }
 
 
     @Override
     public Resume doLoad(String uuid) {
-        int idx = getIndex(uuid);
-        return resumes[idx];
+//        int idx = getIndex(uuid);
+//        return resumes[idx];
+        return resumes[index];
     }
 
     @Override
     public void doDelete(String uuid) throws WebAppException {
-        int idx = getIndex(uuid);
-        int numMoved = size - idx - 1;
+//        int idx = getIndex(uuid);
+//        int numMoved = size - idx - 1;
+//        if (numMoved > 0)
+//            System.arraycopy(resumes, idx + 1, resumes, idx,
+//                    numMoved);
+//        resumes[--size] = null;
+        int numMoved = size - index - 1;
         if (numMoved > 0)
-            System.arraycopy(resumes, idx + 1, resumes, idx,
+            System.arraycopy(resumes, index + 1, resumes, index,
                     numMoved);
         resumes[--size] = null;
     }
@@ -80,14 +91,14 @@ public class ArrayStorage extends AbstractStorage {
         return size;
     }
 
-    private int getIndex(String uuid) {
-        for (int i = 0; i < LIMIT; i++) {
-            if (resumes[i] != null) {
-                if (resumes[i].getUuid().equals(uuid)) {
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
+//    private int getIndex(String uuid) {
+//        for (int i = 0; i < LIMIT; i++) {
+//            if (resumes[i] != null) {
+//                if (resumes[i].getUuid().equals(uuid)) {
+//                    return i;
+//                }
+//            }
+//        }
+//        return -1;
+//    }
 }
