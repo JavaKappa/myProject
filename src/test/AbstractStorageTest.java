@@ -5,11 +5,9 @@ import ru.webapp.model.Contact;
 import ru.webapp.model.ContactType;
 import ru.webapp.model.Resume;
 import storage.IStorage;
-import storage.MapStorage;
 import storage.WebAppException;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.TreeSet;
 
 public abstract class AbstractStorageTest {

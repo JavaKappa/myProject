@@ -3,7 +3,6 @@ package storage;
 import ru.webapp.model.Resume;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * Капу пк
@@ -66,9 +65,14 @@ public class ArrayStorage extends AbstractStorage {
 
     @Override
     public Collection<Resume> doGetAllSorted() {
-        List<Resume> list = Arrays.asList(Arrays.copyOf(resumes, size));
-        list.sort(Comparator.comparing(Resume::getFullName));
+        List<Resume> list = getAll();
+        Collections.sort(list);
         return list;
+    }
+
+    @Override
+    public List<Resume> doGetAll() {
+        return Arrays.asList(Arrays.copyOf(resumes, size));
     }
 
     @Override

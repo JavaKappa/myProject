@@ -3,6 +3,7 @@ package storage;
 import ru.webapp.model.Resume;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Logger;
 
 abstract public class AbstractStorage implements IStorage{
@@ -74,6 +75,13 @@ abstract public class AbstractStorage implements IStorage{
     }
 
     public abstract Collection<Resume> doGetAllSorted();
+
+    public List<Resume> getAll(){
+        logger.info("getiing all");
+        return doGetAll();
+    }
+
+    public abstract List<Resume> doGetAll ();
 
 
     void doException(String message) {
