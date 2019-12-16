@@ -1,9 +1,6 @@
 package ru.webapp.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Капу пк
@@ -19,7 +16,12 @@ public class Resume implements Comparable<Resume>{
     private String location;
     private String homePage;
     private Collection<Section> sections = new ArrayList<>();
-    private Collection<Contact> contacts = new ArrayList<>();
+    private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+
+
+    public Map<ContactType, String> getContacts() {
+        return contacts;
+    }
 
     public Resume(String fullName, String location) {
         this(UUID.randomUUID().toString(), fullName, location);
@@ -58,8 +60,11 @@ public class Resume implements Comparable<Resume>{
         sections.add(section);
     }
 
-    public void addContact(Contact contact) {
-        contacts.add(contact);
+    public void addContact(ContactType contactType, String value) {
+        contacts.put(contactType, value);
+    }
+    public String getContact(ContactType contactType) {
+        return contacts.get(contactType);
     }
 
     @Override
@@ -84,6 +89,14 @@ public class Resume implements Comparable<Resume>{
 
     @Override
     public int compareTo(Resume o) {
-        return getFullName().compareTo(o.getFullName());
+        int cmp = this.getFullName().compareTo(o.getFullName());
+        if (cmp != 0){
+            return cmp;
+        }
+        else{
+            return Objects.compare(this.getUuid(), o.getUuid(), Comparator.naturalOrder());
+        }
     }
+
+
 }

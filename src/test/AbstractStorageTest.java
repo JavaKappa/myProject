@@ -1,7 +1,6 @@
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ru.webapp.model.Contact;
 import ru.webapp.model.ContactType;
 import ru.webapp.model.Resume;
 import storage.IStorage;
@@ -18,20 +17,22 @@ public abstract class AbstractStorageTest {
 
     {
         r1 = new Resume("Игорь", "Allworld");
-        r1.addContact(new Contact(ContactType.PHONE_NUMBER, "+02"));
+        r1.addContact(ContactType.PHONE_NUMBER, "+02");
         r2 = new Resume("Ccfyz", "armeniya");
-        r2.addContact(new Contact(ContactType.PHONE_NUMBER, "+04"));
-        r2.addContact(new Contact(ContactType.EMAIL, "gmalru"));
-        r2.addContact(new Contact(ContactType.PHONE_NUMBER, "+04"));
+        r2.addContact(ContactType.PHONE_NUMBER, "+04");
+        r2.addContact(ContactType.EMAIL, "gmalru");
+        r2.addContact(ContactType.PHONE_NUMBER, "+04");
         r3 = new Resume("gogi", "gruziya");
         r4 = new Resume("gogi", "gruziya");
         r5 = new Resume("gogi", "gruziya");
         r6 = new Resume("gogi", "gruziya");
         r7 = new Resume("gogi", "gruziya");
+        r6.addContact(ContactType.EMAIL, "fgg");
+        r4.addContact(ContactType.EMAIL, "tt");
         r8 = new Resume("gogi", "gruziya");
         r9 = new Resume("gogi", "gruziya");
-        r3.addContact(new Contact(ContactType.PHONE_NUMBER, "+00"));
-        r3.addContact(new Contact(ContactType.SKYPE, "+skype00"));
+        r3.addContact(ContactType.PHONE_NUMBER, "+00");
+        r3.addContact(ContactType.SKYPE, "+skype00");
     }
 
     @Before
