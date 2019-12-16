@@ -6,15 +6,18 @@ import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 
-abstract public class AbstractStorage implements IStorage{
+abstract public class AbstractStorage<C> implements IStorage{
     protected Logger logger = Logger.getLogger(ArrayStorage.class.getName());
 
-    protected abstract int getIndex(String uuid);
+    protected abstract C getContext(String uuid);
+
+    protected abstract boolean exist(C ctx);
 
     @Override
     public void save(Resume resume) {
         logger.info("Save resume witRh uuid: " + resume.getUuid());
-        if (getIndex(resume.getUuid()) != -1) {
+        C context = getContext(resume.getUuid());
+        if (exist(context)) {
             doException("Resume already exist");
         }
         doSave(resume);
@@ -26,37 +29,41 @@ abstract public class AbstractStorage implements IStorage{
     @Override
     public void update(Resume resume) {
         logger.info("trying update " + resume.getUuid());
-        if (getIndex(resume.getUuid()) == -1) {
+        C ctx = getContext(resume.getUuid());
+        if (!exist(ctx)) {
             doException("Resume does not exist");
         }
+        doUpdate(ctx, resume);
         logger.info("Resume updating was success!");
     }
 
-    abstract public void doUpdate(Resume resume);
+    abstract public void doUpdate(C ctx, Resume resume);
     //---------------------------------------------------------------------------------------
 
     @Override
     public Resume load(String uuid) {
         logger.info("trying load" + uuid);
-        if (getIndex(uuid) == -1) {
+        C ctx = getContext(uuid);
+        if (!exist(ctx)) {
             doException("Resume  does not exist");
         }
-        return doLoad(uuid);
+        return doLoad(ctx);
     }
 
-    abstract public Resume doLoad(String uuid);
+    abstract public Resume doLoad(C ctx);
     //---------------------------------------------------------------------------------------
 
     @Override
     public void delete(String uuid) throws WebAppException {
         logger.info("Delete resume with uuid " + uuid);
-        if (getIndex(uuid) == -1) {
-            doException("Resume does not exist");
+        C ctx = getContext(uuid);
+        if (!exist(ctx)) {
+            doException("Resume  does not exist");
         }
-        doDelete(uuid);
+        doDelete(ctx);
     }
 
-    abstract public void doDelete(String uuid);
+    abstract public void doDelete(C ctx);
     //---------------------------------------------------------------------------------------
 
     @Override

@@ -4,17 +4,22 @@ import ru.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapStorage extends AbstractStorage {
+public class MapStorage extends AbstractStorage<String> {
     private Map<String, Resume> storage = new HashMap<>();
 
 
     @Override
-    protected int getIndex(String uuid) {
+    protected String getContext(String uuid) {
         if (storage.containsKey(uuid)) {
-            return 1;
+            return uuid;
         } else {
-            return -1;
+            return "not exist";
         }
+    }
+
+    @Override
+    protected boolean exist(String ctx) {
+        return !ctx.equals("not exist");
     }
 
     @Override
@@ -23,14 +28,12 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public void doUpdate(Resume resume) {
-
-        storage.put(resume.getUuid(), resume);
+    public void doUpdate(String uuid, Resume resume) {
+        storage.put(uuid, resume);
     }
 
     @Override
-    public Resume doLoad(String uuid) {
-
+    public Resume doLoad( String uuid) {
         return storage.get(uuid);
     }
 

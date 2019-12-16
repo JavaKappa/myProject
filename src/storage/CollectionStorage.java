@@ -8,33 +8,29 @@ import java.util.Comparator;
 import java.util.List;
 
 
-public class CollectionStorage extends AbstractStorage {
+public class CollectionStorage extends AbstractStorage<Integer> {
     private ArrayList<Resume> storage = new ArrayList<>();
+
 
 
     @Override
     public void doSave(Resume resume) {
-        int idx = getIndex(resume.getUuid());
-        storage.add(resume);
+            storage.add(resume);
     }
 
     @Override
-    public void doUpdate(Resume resume) {
-        int idx = getIndex(resume.getUuid());
-        storage.remove(idx);
-        storage.add(resume);
+    public void doUpdate(Integer i, Resume resume) {
+        storage.set(i, resume);
     }
 
     @Override
-    public Resume doLoad(String uuid) {
-        int idx = getIndex(uuid);
-        return storage.get(idx);
+    public Resume doLoad(Integer i) {
+        return storage.get(i);
     }
 
     @Override
-    public void doDelete(String uuid) {
-        int idx = getIndex(uuid);
-        storage.remove(idx);
+    public void doDelete(Integer i) {
+        storage.remove((int)i);
     }
 
     @Override
@@ -59,12 +55,17 @@ public class CollectionStorage extends AbstractStorage {
     }
 
     @Override
-    protected int getIndex(String uuid) {
+    protected Integer getContext(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }
         return -1;
+    }
+
+    @Override
+    protected boolean exist(Integer ctx) {
+        return ctx != -1;
     }
 }
