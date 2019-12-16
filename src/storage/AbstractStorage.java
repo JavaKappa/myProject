@@ -9,12 +9,12 @@ import java.util.logging.Logger;
 abstract public class AbstractStorage implements IStorage{
     protected Logger logger = Logger.getLogger(ArrayStorage.class.getName());
 
-    public abstract boolean exist(String uuid);
+    protected abstract int getIndex(String uuid);
 
     @Override
     public void save(Resume resume) {
         logger.info("Save resume witRh uuid: " + resume.getUuid());
-        if (exist(resume.getUuid())) {
+        if (getIndex(resume.getUuid()) != -1) {
             doException("Resume already exist");
         }
         doSave(resume);
@@ -26,7 +26,7 @@ abstract public class AbstractStorage implements IStorage{
     @Override
     public void update(Resume resume) {
         logger.info("trying update " + resume.getUuid());
-        if (!exist(resume.getUuid())) {
+        if (getIndex(resume.getUuid()) == -1) {
             doException("Resume does not exist");
         }
         logger.info("Resume updating was success!");
@@ -38,7 +38,7 @@ abstract public class AbstractStorage implements IStorage{
     @Override
     public Resume load(String uuid) {
         logger.info("trying load" + uuid);
-        if (!exist(uuid)) {
+        if (getIndex(uuid) == -1) {
             doException("Resume  does not exist");
         }
         return doLoad(uuid);
@@ -50,7 +50,7 @@ abstract public class AbstractStorage implements IStorage{
     @Override
     public void delete(String uuid) throws WebAppException {
         logger.info("Delete resume with uuid " + uuid);
-        if (!exist(uuid)) {
+        if (getIndex(uuid) == -1) {
             doException("Resume does not exist");
         }
         doDelete(uuid);

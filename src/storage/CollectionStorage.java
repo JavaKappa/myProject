@@ -11,15 +11,6 @@ import java.util.List;
 public class CollectionStorage extends AbstractStorage {
     private ArrayList<Resume> storage = new ArrayList<>();
 
-    @Override
-    public boolean exist(String uuid) {
-        for (Resume resume : storage) {
-            if (resume.getUuid().equals(uuid)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     @Override
     public void doSave(Resume resume) {
@@ -67,7 +58,8 @@ public class CollectionStorage extends AbstractStorage {
         return storage.size();
     }
 
-    private int getIndex(String uuid) {
+    @Override
+    protected int getIndex(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
                 return i;

@@ -7,9 +7,14 @@ import java.util.*;
 public class MapStorage extends AbstractStorage {
     private Map<String, Resume> storage = new HashMap<>();
 
+
     @Override
-    public boolean exist(String uuid) {
-        return storage.containsKey(uuid);
+    protected int getIndex(String uuid) {
+        if (storage.containsKey(uuid)) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 
     @Override
