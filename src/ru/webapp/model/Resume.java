@@ -7,11 +7,20 @@ import java.util.*;
  * 04.12.2019
  */
 public class Resume implements Comparable<Resume>{
+    public static final Resume EMPTY;
+    static {
+        EMPTY = new Resume();
+    }
+
+    public Resume() {
+
+    }
+
     public String getUuid() {
         return uuid;
     }
 
-    private final String uuid;
+    private String uuid;
     private String fullName;
     private String location;
     private String homePage;
