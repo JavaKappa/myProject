@@ -15,7 +15,7 @@ public class Resume implements Comparable<Resume>{
     private String fullName;
     private String location;
     private String homePage;
-    private Collection<Section> sections = new ArrayList<>();
+    private Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
     private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
 
@@ -56,8 +56,8 @@ public class Resume implements Comparable<Resume>{
 
 
 
-    public void addSection(Section section) {
-        sections.add(section);
+    public void addSection(SectionType type, Section section) {
+        sections.put(type, section);
     }
 
     public void addContact(ContactType contactType, String value) {
