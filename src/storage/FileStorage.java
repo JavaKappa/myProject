@@ -13,29 +13,38 @@ import java.util.stream.Stream;
  * Капу пк
  * 18.12.2019
  */
-public class FileStorage extends AbstractStorage<Path> {
-    public static final File pathToFiles = new File("file_storage");
+public class FileStorage extends AbstractStorage<File> {
+    public File pathToFiles = new File("file_storage");
     {
-        createFile(pathToFiles);
+        try {
+            pathToFiles.createNewFile();
+        } catch (IOException e) {
+            throw new WebAppException("Can not crate file", e);
+        }
     }
 
     public FileStorage() {
     }
 
     @Override
-    protected Path getContext(String uuid) {
-        return Paths.get(pathToFiles + "/" + uuid + ".txt");
+    protected File getContext(String uuid) {
+        return new File(pathToFiles + "/" + uuid + ".txt");
     }
 
     @Override
-    protected boolean exist(Path path) {
-        return path.toFile().exists();
+    protected boolean exist(File file) {
+        return file.exists();
     }
 
     @Override
     public void doSave(Resume resume) {
         File f = new File(pathToFiles.getAbsolutePath() + "/" + resume.getUuid() + ".txt");
-        createFile(f);
+        try {
+            if (!f.exists())
+            f.createNewFile();
+        } catch (IOException e) {
+            throw new WebAppException("Couldn't create file", e);
+        }
         try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(pathToFiles.getAbsolutePath() + "/" + resume.getUuid() + ".txt"))){
             os.writeObject(resume);
         } catch (IOException e) {
@@ -43,28 +52,17 @@ public class FileStorage extends AbstractStorage<Path> {
         }
     }
 
-    private void createFile(File file) {
-        if (!file.exists()) {
-            try {
-                if (!file.createNewFile()) {
-                    throw new WebAppException("cn not create file");
-                }
-            } catch (IOException e) {
-
-            }
-        }
-    }
 
     @Override
-    public void doUpdate(Path path, Resume resume) {
+    public void doUpdate(File file, Resume resume) {
         delete(resume.getUuid());
         save(resume);
     }
 
     @Override
-    public Resume doLoad(Path path){
+    public Resume doLoad(File file){
        try {
-           ObjectInputStream os = new ObjectInputStream(new FileInputStream(path.toFile()));
+           ObjectInputStream os = new ObjectInputStream(new FileInputStream(file));
            return (Resume) os.readObject();
        } catch (ClassNotFoundException | IOException e) {
            e.printStackTrace();
@@ -73,17 +71,17 @@ public class FileStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    public void doDelete(Path path) {
-        path.toFile().delete();
+    public void doDelete(File file) {
+        file.delete();
     }
 
     @Override
     public void doClear()  {
-        try {
-            Stream<Path> allResumes = Files.list(pathToFiles.toPath());
-            allResumes.forEach(this::doDelete);
-        } catch (IOException e) {
-            throw new WebAppException("can not get files");
+        File[] files = pathToFiles.listFiles();
+        if (files != null) {
+            for(File file: files){
+                file.delete();
+            }
         }
     }
 
@@ -96,19 +94,22 @@ public class FileStorage extends AbstractStorage<Path> {
 
     @Override
     public List<Resume> doGetAll() {
-        ArrayList<Resume> list = new ArrayList<>();
-        try {
-            Stream<Path> allResumesPaths = Files.list(pathToFiles.toPath());
-            allResumesPaths.forEach(p -> list.add(doLoad(p)));
-
-        } catch (IOException e) {
-            throw new WebAppException("something bad with path", e);
+        List<Resume> allResumes = new ArrayList<>();
+        File[] files = pathToFiles.listFiles();
+        if (files != null) {
+            for (int i = 0; i < files.length; i++) {
+                allResumes.add(doLoad(files[i]));
+            }
         }
-        return list;
+        return allResumes;
     }
 
     @Override
     public int size() {
-        return Objects.requireNonNull(pathToFiles.list()).length;
+        File[] files = pathToFiles.listFiles();
+        if (files != null) {
+            return files.length;
+        }
+        return 0;
     }
 }

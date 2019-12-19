@@ -61,6 +61,10 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
+    public void saveTest() {
+
+    }
+    @Test
     public void clear() {
 
         Assert.assertEquals(3, storage.size());
