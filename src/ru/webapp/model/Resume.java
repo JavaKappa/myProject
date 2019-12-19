@@ -1,12 +1,15 @@
 package ru.webapp.model;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Капу пк
  * 04.12.2019
  */
-public class Resume implements Comparable<Resume>{
+public class Resume implements Comparable<Resume>, Serializable {
+    private static final long serialVersionUID = 1L;
+
     public static final Resume EMPTY;
     static {
         EMPTY = new Resume();
@@ -96,7 +99,7 @@ public class Resume implements Comparable<Resume>{
         }
         final Resume other = (Resume) obj;
         return Objects.equals(hashCode(), obj.hashCode())
-                && Objects.equals(this.uuid, other.uuid);
+                && Objects.equals(this.uuid, other.uuid) &&  Objects.equals(getFullName(), other.getFullName());
     }
 
 
@@ -112,4 +115,12 @@ public class Resume implements Comparable<Resume>{
     }
 
 
+    @Override
+    public String toString() {
+        return "Resume{" +
+                "uuid='" + uuid + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", location='" + location + '\'' +
+                '}';
+    }
 }

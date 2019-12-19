@@ -38,8 +38,8 @@ public abstract class AbstractStorageTest {
     @Before
     public void before() {
         storage.clear();
-        storage.save(r1);
         storage.save(r2);
+        storage.save(r1);
         storage.save(r3);
 
     }
@@ -57,6 +57,7 @@ public abstract class AbstractStorageTest {
         storage.delete(r1.getUuid());
         System.out.println(storage.size());
         Assert.assertEquals(2, storage.size());
+        storage.save(r1);
     }
 
     @Test
