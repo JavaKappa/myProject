@@ -39,7 +39,7 @@ abstract public class AbstractStorageTest {
     }
 
     @Test
-    public void uppdate(){
+    public void update(){
         R2.setFullName("Updated N2");
         storage.update(R2);
         assertEquals(R2, storage.load(R2.getUuid()));
@@ -76,7 +76,7 @@ abstract public class AbstractStorageTest {
 
     @Test
     public void size(){
-        assertEquals(10, storage.size());
+        assertEquals(3, storage.size());
     }
 
     @Test(expected = WebAppException.class)

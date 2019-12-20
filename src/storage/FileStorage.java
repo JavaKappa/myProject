@@ -51,14 +51,12 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public void doUpdate(File file, Resume resume) {
-        delete(resume.getUuid());
-        save(resume);
+        doSave(resume);
     }
 
     @Override
     public Resume doLoad(File file){
-       try {
-           ObjectInputStream os = new ObjectInputStream(new FileInputStream(file));
+       try (ObjectInputStream os = new ObjectInputStream(new FileInputStream(file))){
            return (Resume) os.readObject();
        } catch (ClassNotFoundException | IOException e) {
            e.printStackTrace();
@@ -68,15 +66,16 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public void doDelete(File file) {
-        file.delete();
+        if (!file.delete()) throw new WebAppException("can't delete file");
     }
 
     @Override
     public void doClear()  {
         File[] files = pathToFiles.listFiles();
-        if (files == null) return;
-        for (File file : files) {
-            doDelete(file);
+        if (files != null) {
+            for(File file: files){
+                doDelete(file);
+            }
         }
     }
 
