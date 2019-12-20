@@ -3,23 +3,18 @@ package storage;
 import ru.webapp.model.Resume;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Stream;
+
 
 /**
  * Капу пк
  * 18.12.2019
  */
 public class FileStorage extends AbstractStorage<File> {
-    public File pathToFiles = new File("file_storage");
+    public static final File pathToFiles = new File("file_storage");
     {
-        try {
-            pathToFiles.createNewFile();
-        } catch (IOException e) {
-            throw new WebAppException("Can not crate file", e);
+        if (!pathToFiles.exists()) {
+            pathToFiles.mkdir();
         }
     }
 
@@ -38,14 +33,15 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public void doSave(Resume resume) {
-        File f = new File(pathToFiles.getAbsolutePath() + "/" + resume.getUuid() + ".txt");
+        String pathname = pathToFiles.getAbsolutePath() + "\\" + resume.getUuid() + ".txt";
+        File f = new File(pathname);
         try {
             if (!f.exists())
             f.createNewFile();
         } catch (IOException e) {
             throw new WebAppException("Couldn't create file", e);
         }
-        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(pathToFiles.getAbsolutePath() + "/" + resume.getUuid() + ".txt"))){
+        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(pathname))){
             os.writeObject(resume);
         } catch (IOException e) {
             throw new WebAppException("can not serialize Resume", e);
@@ -78,10 +74,9 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     public void doClear()  {
         File[] files = pathToFiles.listFiles();
-        if (files != null) {
-            for(File file: files){
-                file.delete();
-            }
+        if (files == null) return;
+        for (File file : files) {
+            doDelete(file);
         }
     }
 
@@ -106,10 +101,8 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        File[] files = pathToFiles.listFiles();
-        if (files != null) {
-            return files.length;
-        }
-        return 0;
+        String[] list = pathToFiles.list();
+        if (list == null) throw new WebAppException("Couldn't read directory " + pathToFiles.getAbsolutePath());
+        return list.length;
     }
 }

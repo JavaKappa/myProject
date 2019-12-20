@@ -1,4 +1,4 @@
-import org.junit.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 import ru.webapp.model.ContactType;
@@ -6,121 +6,93 @@ import ru.webapp.model.Resume;
 import storage.IStorage;
 import storage.WebAppException;
 
-import java.util.Collection;
-import java.util.TreeSet;
+import java.util.*;
 
-public abstract class AbstractStorageTest {
-    private Resume r1, r2, r3, r4, r5, r6, r7, r8, r9;
+import static org.junit.Assert.assertEquals;
 
+abstract public class AbstractStorageTest {
+    private Resume R1, R2, R3;
 
     protected IStorage storage;
 
-    {
-        r1 = new Resume("Игорь", "Allworld");
-        r1.addContact(ContactType.PHONE_NUMBER, "+02");
-        r2 = new Resume("Ccfyz", "armeniya");
-        r2.addContact(ContactType.PHONE_NUMBER, "+04");
-        r2.addContact(ContactType.EMAIL, "gmalru");
-        r2.addContact(ContactType.PHONE_NUMBER, "+04");
-        r3 = new Resume("gogi", "gruziya");
-        r4 = new Resume("gogi", "gruziya");
-        r5 = new Resume("gogi", "gruziya");
-        r6 = new Resume("gogi", "gruziya");
-        r7 = new Resume("gogi", "gruziya");
-        r6.addContact(ContactType.EMAIL, "fgg");
-        r4.addContact(ContactType.EMAIL, "tt");
-        r8 = new Resume("gogi", "gruziya");
-        r9 = new Resume("gogi", "gruziya");
-        r3.addContact(ContactType.PHONE_NUMBER, "+00");
-        r3.addContact(ContactType.SKYPE, "+skype00");
-    }
 
     @Before
     public void before() {
-        storage.clear();
-        storage.save(r2);
-        storage.save(r1);
-        storage.save(r3);
+        R1 = new Resume("Полное Имя1", "location1");
+        R1.addContact(ContactType.MAIL, "mail1@ya.ru");
+        R1.addContact(ContactType.PHONE, "11111");
+        R2 = new Resume("Полное Имя2", "Location1");
+        R2.addContact(ContactType.SKYPE, "skype2");
+        R2.addContact(ContactType.PHONE, "22222");
+        R3 = new Resume("Полное Имя3", "");
 
+        storage.clear();
+        storage.save(R3);
+        storage.save(R1);
+        storage.save(R2);
+    }
+
+    @Test
+    public void clear() {
+        storage.clear();
+        assertEquals(0, storage.size());
+    }
+
+    @Test
+    public void uppdate(){
+        R2.setFullName("Updated N2");
+        storage.update(R2);
+        assertEquals(R2, storage.load(R2.getUuid()));
     }
 
     @Test
     public void load() {
-        Assert.assertEquals(r1, storage.load(r1.getUuid()));
-        Assert.assertEquals(r2, storage.load(r2.getUuid()));
-        Assert.assertEquals(r3, storage.load(r3.getUuid()));
-
-    }
-
-    @Test
-    public void delete() throws WebAppException {
-        storage.delete(r1.getUuid());
-        System.out.println(storage.size());
-        Assert.assertEquals(2, storage.size());
-        storage.save(r1);
-    }
-
-    @Test
-    public void saveTest() {
-
-    }
-    @Test
-    public void clear() {
-
-        Assert.assertEquals(3, storage.size());
-        storage.clear();
-        Assert.assertEquals(0, storage.size());
-    }
-
-    @Test
-    public void update() {
-        r2.setFullName("Updated");
-        storage.update(r2);
-        Assert.assertEquals(r2, storage.load(r2.getUuid()));
+        Resume load = storage.load(R1.getUuid());
+        assertEquals(R1, load);
+        assertEquals(R2, storage.load(R2.getUuid()));
+        assertEquals(R3, storage.load(R3.getUuid()));
     }
 
     @Test(expected = WebAppException.class)
-    public void testLoadNotExistFile() {
-        storage.load("uuid");
-
+    public void deleteNotFound() {
+        storage.load("dummy");
     }
 
-    @Test(expected = WebAppException.class)
-    public void testUpdateNotExistFile() {
-        storage.update(new Resume("1113", "3"));
-    }
-
-    @Test(expected = WebAppException.class)
-    public void testDeleteNotExistFile() {
-        storage.delete("1113");
-    }
-
-    @Test(expected = WebAppException.class)
-    public void testSaveAlreadyInUse() {
-        storage.save(r1);
+    @Test
+    public void delete() {
+        storage.delete(R1.getUuid());
+        assertEquals(2, storage.size());
     }
 
     @Test
     public void getAllSorted() {
-        Collection<Resume> expectedCollection = new TreeSet<>();
-        expectedCollection.add(r1);
-        expectedCollection.add(r2);
-        expectedCollection.add(r3);
-        Collection<Resume> collection = storage.getAllSorted();
-        Assert.assertArrayEquals(expectedCollection.toArray(), collection.toArray());
+//        Resume[] src = new Resume[]{R1, R2, R3};
+//        Arrays.sort(src);
+//        assertArrayEquals(src, storage.getAllSorted().toArray());
+        List<Resume> list = Arrays.asList(R1, R2, R3);
+        list.sort((o1, o2) -> 0);
+        assertEquals(list, new ArrayList<>(storage.getAllSorted()));
     }
 
     @Test
-    public void size() {
-        Assert.assertEquals(3, storage.size());
-        storage.save(r4);
-        storage.save(r5);
-        storage.save(r6);
-        storage.save(r7);
-        Assert.assertEquals(7, storage.size());
-        storage.delete(r5.getUuid());
-        storage.delete(r1.getUuid());
-        Assert.assertEquals(5, storage.size());
+    public void size(){
+        assertEquals(10, storage.size());
+    }
+
+    @Test(expected = WebAppException.class)
+    public void deleteMissed()  {
+        storage.delete("dummy");
+    }
+
+    @Test(expected = WebAppException.class)
+    public void savePresented() {
+        storage.save(R1);
+    }
+
+    @Test(expected = WebAppException.class)
+    public void updateMissed()  {
+        Resume resume = new Resume("dummy", "fullName_U1", "location_U1");
+        storage.update(resume);
     }
 }
 

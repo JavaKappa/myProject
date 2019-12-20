@@ -1,8 +1,8 @@
 package ru.webapp.model;
 
 public enum ContactType {
-    PHONE_NUMBER("Номер телефона"),
-    EMAIL ("Электронная почта"),
+    PHONE("Номер телефона"),
+    MAIL("Электронная почта"),
     SKYPE("Skype"),
     HOME_ADDRESS("Домашний адрес");
 

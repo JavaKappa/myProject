@@ -12,25 +12,9 @@ import static java.nio.file.Files.isDirectory;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Resume resume = new Resume("Игорь", "Питер");
-        Resume resume1 = new Resume("Игорь1", "Питер");
-        Resume resume2 = new Resume("Игорь2", "Питер");
-        Resume resume3 = new Resume("Игорь3", "Питер");
-        FileStorage fileStorage = new FileStorage();
-        fileStorage.clear();
-        System.out.println(fileStorage.size());
-        fileStorage.save(resume);
-        fileStorage.save(resume3);
-        System.out.println(fileStorage.size());
-        fileStorage.save(resume2);
-        fileStorage.save(resume1);
-        System.out.println(fileStorage.size());
-        fileStorage.delete(resume1.getUuid());
-        List<Resume> list = (List<Resume>) fileStorage.getAllSorted();
-
-        System.out.println(list);
-        System.out.println(fileStorage.size());
-
+        File file = new File(FileStorage.pathToFiles + "/123.txt");
+        System.out.println(file.getAbsolutePath());
+        file.createNewFile();
 
     }
 }
