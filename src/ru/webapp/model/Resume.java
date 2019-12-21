@@ -2,6 +2,7 @@ package ru.webapp.model;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.function.BiConsumer;
 
 /**
  * Капу пк
@@ -55,6 +56,13 @@ public class Resume implements Comparable<Resume>, Serializable {
         this.homePage = homePage;
     }
 
+    public void addObjective(String... values) {
+        sections.put(SectionType.OBJECTIVE, new TextSection(SectionType.OBJECTIVE, values));
+    }
+
+    public void addTextSectionWithTitle(SectionType type, String title, String... values) {
+        sections.put(type, new TextSectionWithTitle(type, title, values));
+    }
     public Resume(String uuid, String fullName, String location) {
         this.uuid = uuid;
         this.fullName = fullName;
@@ -98,6 +106,11 @@ public class Resume implements Comparable<Resume>, Serializable {
             return false;
         }
         final Resume other = (Resume) obj;
+        if (!this.sections.equals(other.sections)) {
+            return false;
+        }
+
+
         return Objects.equals(hashCode(), obj.hashCode())
                 && Objects.equals(this.uuid, other.uuid) &&  Objects.equals(getFullName(), other.getFullName());
     }
@@ -122,5 +135,9 @@ public class Resume implements Comparable<Resume>, Serializable {
                 ", fullName='" + fullName + '\'' +
                 ", location='" + location + '\'' +
                 '}';
+    }
+
+    public Map<SectionType, Section> getSections() {
+        return sections;
     }
 }

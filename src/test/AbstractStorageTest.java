@@ -1,14 +1,14 @@
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.webapp.model.ContactType;
-import ru.webapp.model.Resume;
+import ru.webapp.model.*;
 import storage.IStorage;
 import storage.WebAppException;
 
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 abstract public class AbstractStorageTest {
     private Resume R1, R2, R3;
@@ -20,6 +20,8 @@ abstract public class AbstractStorageTest {
     public void before() {
         R1 = new Resume("Полное Имя1", "location1");
         R1.addContact(ContactType.MAIL, "mail1@ya.ru");
+        R1.addContact(ContactType.PHONE, "11111");
+        R1.addSection(SectionType.ACHIEVEMENT, new TextSection(SectionType.ACHIEVEMENT,"javarush", "basejava", "topjava"));
         R1.addContact(ContactType.PHONE, "11111");
         R2 = new Resume("Полное Имя2", "Location1");
         R2.addContact(ContactType.SKYPE, "skype2");
@@ -93,6 +95,16 @@ abstract public class AbstractStorageTest {
     public void updateMissed()  {
         Resume resume = new Resume("dummy", "fullName_U1", "location_U1");
         storage.update(resume);
+    }
+
+    @Test
+    public void testSectionEquals() {
+        R1.addObjective("1", "3");
+        storage.update(R1);
+
+        Resume rr = storage.load(R1.getUuid());
+        rr.addTextSectionWithTitle(SectionType.EXPERIENCE, "ach1","ach2");
+        assertNotEquals(R1, rr);
     }
 }
 
