@@ -109,6 +109,9 @@ public class Resume implements Comparable<Resume>, Serializable {
         if (!this.sections.equals(other.sections)) {
             return false;
         }
+        if (!this.contacts.equals(other.contacts)) {
+            return false;
+        }
 
 
         return Objects.equals(hashCode(), obj.hashCode())

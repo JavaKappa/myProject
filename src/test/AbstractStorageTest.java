@@ -106,5 +106,31 @@ abstract public class AbstractStorageTest {
         rr.addTextSectionWithTitle(SectionType.EXPERIENCE, "ach1","ach2");
         assertNotEquals(R1, rr);
     }
+
+    @Test
+    public void testContacts() {
+        R1.addContact(ContactType.SKYPE, "skype");
+        storage.update(R1);
+        Resume rr = storage.load(R1.getUuid());
+
+        assertEquals(R1, rr);
+    }
+    @Test
+    public void testContactsA() {
+        R1.addContact(ContactType.SKYPE, "skype");
+        storage.update(R1);
+        Resume rr = storage.load(R1.getUuid());
+        rr.addContact(ContactType.SKYPE, "neSkype");
+        assertNotEquals(R1, rr);
+    }
+    @Test
+    public void testContactsB() {
+        R1.addContact(ContactType.SKYPE, "skype");
+        storage.update(R1);
+        Resume rr = storage.load(R1.getUuid());
+        rr.addContact(ContactType.PHONE, "nePhone");
+        assertNotEquals(R1, rr);
+    }
+
 }
 
