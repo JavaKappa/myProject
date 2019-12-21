@@ -2,14 +2,14 @@ import org.junit.Test;
 import ru.webapp.model.ContactType;
 import ru.webapp.model.Resume;
 import ru.webapp.model.SectionType;
-import storage.FileStorage;
+import storage.SerializeFileStorage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class FileStorageTest extends AbstractStorageTest {
+public class SerializeFileStorageTest extends AbstractStorageTest {
     {
-        storage = new FileStorage();
+        storage = new SerializeFileStorage();
     }
 
 

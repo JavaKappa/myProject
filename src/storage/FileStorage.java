@@ -3,15 +3,18 @@ package storage;
 import ru.webapp.model.Resume;
 
 import java.io.*;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Капу пк
- * 18.12.2019
+ * 22.12.2019
  */
-public class FileStorage extends AbstractStorage<File> {
+abstract public class FileStorage extends AbstractStorage<File> {
     public static final File pathToFiles = new File("file_storage");
+
     {
         if (!pathToFiles.exists()) {
             pathToFiles.mkdir();
@@ -37,17 +40,18 @@ public class FileStorage extends AbstractStorage<File> {
         File f = new File(pathname);
         try {
             if (!f.exists())
-            f.createNewFile();
+                f.createNewFile();
         } catch (IOException e) {
             throw new WebAppException("Couldn't create file", e);
         }
-        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(pathname))){
-            os.writeObject(resume);
+        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(pathname))) {
+            write(os, resume);
         } catch (IOException e) {
             throw new WebAppException("can not serialize Resume", e);
         }
     }
 
+    protected abstract void write(ObjectOutputStream os, Resume resume) throws IOException;
 
     @Override
     public void doUpdate(File file, Resume resume) {
@@ -55,14 +59,16 @@ public class FileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    public Resume doLoad(File file){
-       try (ObjectInputStream os = new ObjectInputStream(new FileInputStream(file))){
-           return (Resume) os.readObject();
-       } catch (ClassNotFoundException | IOException e) {
-           e.printStackTrace();
-       }
+    public Resume doLoad(File file) {
+        try (ObjectInputStream os = new ObjectInputStream(new FileInputStream(file))) {
+            return read(os);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
+
+    protected abstract Resume read(ObjectInputStream os) throws IOException;
 
     @Override
     public void doDelete(File file) {
@@ -70,10 +76,10 @@ public class FileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    public void doClear()  {
+    public void doClear() {
         File[] files = pathToFiles.listFiles();
         if (files != null) {
-            for(File file: files){
+            for (File file : files) {
                 doDelete(file);
             }
         }
@@ -105,3 +111,4 @@ public class FileStorage extends AbstractStorage<File> {
         return list.length;
     }
 }
+
