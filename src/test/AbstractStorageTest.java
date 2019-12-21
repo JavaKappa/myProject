@@ -5,6 +5,8 @@ import ru.webapp.model.*;
 import storage.IStorage;
 import storage.WebAppException;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
@@ -29,6 +31,16 @@ abstract public class AbstractStorageTest {
         R3 = new Resume("Полное Имя3", "");
         R3.addSection(SectionType.OBJECTIVE, new TextSection(SectionType.OBJECTIVE, "ggg", "zzz"));
         R3.addSection(SectionType.EXPERIENCE, new TextSectionWithTitle(SectionType.EXPERIENCE, "ggg", "zzz", "gghh"));
+        R1.addSection(SectionType.QUALIFICATIONS, new TextSection(SectionType.QUALIFICATIONS,"Java", "SQL"));
+        R1.addOrganizationSection(SectionType.EXPERIENCE,
+                new Organization("Organization11", null,
+                        new Organization.Period(LocalDate.of(2005, Month.JANUARY, 1), Organization.Period.NOW, "position1", "content1"),
+                        new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "position2", "content2")));
+        R1.addOrganizationSection(SectionType.EDUCATION,
+                new Organization("Institute", null,
+                        new Organization.Period(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
+                        new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT facultet")),
+                new Organization("Organization12", new Link("Organizations1", "http://Organization12.ru")));
 
         storage.clear();
         storage.save(R3);

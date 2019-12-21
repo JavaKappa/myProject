@@ -35,7 +35,6 @@ public class FileStorageTest extends AbstractStorageTest {
         R1.addContact(ContactType.SKYPE, "skype");
         storage.update(R1);
         Resume rr = storage.load(R1.getUuid());
-
         assertEquals(R1, rr);
     }
     @Test

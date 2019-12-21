@@ -1,6 +1,7 @@
 package ru.webapp.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Капу пк
@@ -8,10 +9,11 @@ import java.io.Serializable;
  */
 public class TextSection extends Section implements Serializable {
     private static final long serialVersionUID = 1L;
+    protected String[] comments;
 
     public TextSection(SectionType sectionType, String... comments) {
-        super(comments);
-        this.sectionType = sectionType;
+        super(sectionType);
+        this.comments = comments;
     }
 
 
@@ -23,7 +25,7 @@ public class TextSection extends Section implements Serializable {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        final Section other = (Section) obj;
+        final TextSection other = (TextSection) obj;
         if (this.sectionType != other.sectionType) {
             return false;
         }
@@ -36,5 +38,13 @@ public class TextSection extends Section implements Serializable {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "TextSection{" +
+                "comments=" + Arrays.toString(comments) +
+                ", sectionType=" + sectionType +
+                '}';
     }
 }

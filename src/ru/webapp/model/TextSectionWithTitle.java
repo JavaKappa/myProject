@@ -2,6 +2,7 @@ package ru.webapp.model;
 
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -11,10 +12,11 @@ import java.util.List;
 public class TextSectionWithTitle extends Section implements Serializable {
     private static final long serialVersionUID = 1L;
     private String title;
+    protected String[] comments;
 
 
     public TextSectionWithTitle(SectionType sectionType, String title, String... comments) {
-        this.sectionType = sectionType;
+        super(sectionType);
         this.title = title;
         this.comments = comments;
     }
@@ -46,5 +48,14 @@ public class TextSectionWithTitle extends Section implements Serializable {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "TextSectionWithTitle{" +
+                "title='" + title + '\'' +
+                ", comments=" + Arrays.toString(comments) +
+                ", sectionType=" + sectionType +
+                '}';
     }
 }

@@ -12,6 +12,7 @@ public class Resume implements Comparable<Resume>, Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final Resume EMPTY;
+
     static {
         EMPTY = new Resume();
     }
@@ -63,6 +64,7 @@ public class Resume implements Comparable<Resume>, Serializable {
     public void addTextSectionWithTitle(SectionType type, String title, String... values) {
         sections.put(type, new TextSectionWithTitle(type, title, values));
     }
+
     public Resume(String uuid, String fullName, String location) {
         this.uuid = uuid;
         this.fullName = fullName;
@@ -79,7 +81,6 @@ public class Resume implements Comparable<Resume>, Serializable {
     }
 
 
-
     public void addSection(SectionType type, Section section) {
         sections.put(type, section);
     }
@@ -87,8 +88,13 @@ public class Resume implements Comparable<Resume>, Serializable {
     public void addContact(ContactType contactType, String value) {
         contacts.put(contactType, value);
     }
+
     public String getContact(ContactType contactType) {
         return contacts.get(contactType);
+    }
+
+    public void addOrganizationSection(SectionType type, Organization... organizations) {
+        addSection(type, new OrganizationSection(type, organizations));
     }
 
     @Override
@@ -115,21 +121,25 @@ public class Resume implements Comparable<Resume>, Serializable {
 
 
         return Objects.equals(hashCode(), obj.hashCode())
-                && Objects.equals(this.uuid, other.uuid) &&  Objects.equals(getFullName(), other.getFullName());
+                && Objects.equals(this.uuid, other.uuid) && Objects.equals(getFullName(), other.getFullName());
     }
 
 
     @Override
     public int compareTo(Resume o) {
         int cmp = this.getFullName().compareTo(o.getFullName());
-        if (cmp != 0){
+        if (cmp != 0) {
             return cmp;
-        }
-        else{
+        } else {
             return Objects.compare(this.getUuid(), o.getUuid(), Comparator.naturalOrder());
         }
     }
 
+
+
+    public Map<SectionType, Section> getSections() {
+        return sections;
+    }
 
     @Override
     public String toString() {
@@ -137,10 +147,9 @@ public class Resume implements Comparable<Resume>, Serializable {
                 "uuid='" + uuid + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", location='" + location + '\'' +
+                ", homePage='" + homePage + '\'' +
+                ", sections=" + sections +
+                ", contacts=" + contacts +
                 '}';
-    }
-
-    public Map<SectionType, Section> getSections() {
-        return sections;
     }
 }
