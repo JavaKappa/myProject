@@ -34,7 +34,9 @@ public class TextSectionWithTitle extends Section implements Serializable {
         if (this.sectionType != other.sectionType) {
             return false;
         }
-        if (this.title != other.title) return false;
+        if (!this.title.equals(other.title)) {
+            return false;
+        }
         if (comments.length != other.comments.length) {
             return false;
         }

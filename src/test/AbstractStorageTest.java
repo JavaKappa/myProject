@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 abstract public class AbstractStorageTest {
-    private Resume R1, R2, R3;
+    protected Resume R1, R2, R3;
 
     protected IStorage storage;
 
@@ -27,6 +27,8 @@ abstract public class AbstractStorageTest {
         R2.addContact(ContactType.SKYPE, "skype2");
         R2.addContact(ContactType.PHONE, "22222");
         R3 = new Resume("Полное Имя3", "");
+        R3.addSection(SectionType.OBJECTIVE, new TextSection(SectionType.OBJECTIVE, "ggg", "zzz"));
+        R3.addSection(SectionType.EXPERIENCE, new TextSectionWithTitle(SectionType.EXPERIENCE, "ggg", "zzz", "gghh"));
 
         storage.clear();
         storage.save(R3);
@@ -72,7 +74,7 @@ abstract public class AbstractStorageTest {
 //        Arrays.sort(src);
 //        assertArrayEquals(src, storage.getAllSorted().toArray());
         List<Resume> list = Arrays.asList(R1, R2, R3);
-        list.sort((o1, o2) -> 0);
+        list.sort(Comparator.naturalOrder());
         assertEquals(list, new ArrayList<>(storage.getAllSorted()));
     }
 
@@ -97,40 +99,7 @@ abstract public class AbstractStorageTest {
         storage.update(resume);
     }
 
-    @Test
-    public void testSectionEquals() {
-        R1.addObjective("1", "3");
-        storage.update(R1);
 
-        Resume rr = storage.load(R1.getUuid());
-        rr.addTextSectionWithTitle(SectionType.EXPERIENCE, "ach1","ach2");
-        assertNotEquals(R1, rr);
-    }
-
-    @Test
-    public void testContacts() {
-        R1.addContact(ContactType.SKYPE, "skype");
-        storage.update(R1);
-        Resume rr = storage.load(R1.getUuid());
-
-        assertEquals(R1, rr);
-    }
-    @Test
-    public void testContactsA() {
-        R1.addContact(ContactType.SKYPE, "skype");
-        storage.update(R1);
-        Resume rr = storage.load(R1.getUuid());
-        rr.addContact(ContactType.SKYPE, "neSkype");
-        assertNotEquals(R1, rr);
-    }
-    @Test
-    public void testContactsB() {
-        R1.addContact(ContactType.SKYPE, "skype");
-        storage.update(R1);
-        Resume rr = storage.load(R1.getUuid());
-        rr.addContact(ContactType.PHONE, "nePhone");
-        assertNotEquals(R1, rr);
-    }
 
 }
 
