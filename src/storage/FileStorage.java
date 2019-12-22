@@ -13,12 +13,11 @@ import java.util.List;
  * 22.12.2019
  */
 abstract public class FileStorage extends AbstractStorage<File> {
-    public static final File pathToFiles = new File("file_storage");
+    public File pathToFiles = new File("file_storage");
 
-    {
-        if (!pathToFiles.exists()) {
-            pathToFiles.mkdir();
-        }
+
+    public FileStorage(String path) {
+        pathToFiles = new File(path);
     }
 
     public FileStorage() {
@@ -36,6 +35,9 @@ abstract public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public void doSave(Resume resume) {
+        if (!pathToFiles.exists()) {
+            pathToFiles.mkdirs();
+        }
         String pathname = pathToFiles.getAbsolutePath() + "\\" + resume.getUuid() + ".txt";
         File f = new File(pathname);
         try {

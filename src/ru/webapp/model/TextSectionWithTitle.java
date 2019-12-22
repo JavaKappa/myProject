@@ -15,10 +15,15 @@ public class TextSectionWithTitle extends Section implements Serializable {
     protected String[] comments;
 
 
+
     public TextSectionWithTitle(SectionType sectionType, String title, String... comments) {
-        super(sectionType);
+        this.sectionType = sectionType;
         this.title = title;
         this.comments = comments;
+    }
+
+    public TextSectionWithTitle(SectionType sectionType) {
+        this.sectionType = sectionType;
     }
 
     public String getTitle() {

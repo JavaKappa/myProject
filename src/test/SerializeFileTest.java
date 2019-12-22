@@ -7,7 +7,7 @@ import storage.SerializeFileStorage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class SerializeFileStorageTest extends AbstractStorageTest {
+public class SerializeFileTest extends AbstractTest {
     {
         storage = new SerializeFileStorage();
     }

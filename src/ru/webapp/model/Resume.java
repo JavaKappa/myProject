@@ -1,13 +1,16 @@
 package ru.webapp.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.*;
-import java.util.function.BiConsumer;
+
 
 /**
  * Капу пк
  * 04.12.2019
  */
+
+@XmlRootElement
 public class Resume implements Comparable<Resume>, Serializable {
     private static final long serialVersionUID = 1L;
 

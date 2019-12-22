@@ -9,11 +9,13 @@ import java.util.Collection;
  * 05.12.2019
  */
 public class OrganizationSection  extends Section implements Serializable {
+
+
     private Collection<Organization> organizations;
 
 
     public OrganizationSection(SectionType sectionType, Organization... organizations) {
-        super(sectionType);
+        this.sectionType = sectionType;
         this.organizations = Arrays.asList(organizations);
     }
 

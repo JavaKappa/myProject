@@ -9,10 +9,12 @@ import java.util.Arrays;
  */
 public class TextSection extends Section implements Serializable {
     private static final long serialVersionUID = 1L;
+
+
     protected String[] comments;
 
     public TextSection(SectionType sectionType, String... comments) {
-        super(sectionType);
+        this.sectionType = sectionType;
         this.comments = comments;
     }
 

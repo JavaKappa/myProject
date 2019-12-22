@@ -1,6 +1,6 @@
 import storage.ArrayStorage;
 
-public class ArrayStorageTest extends AbstractStorageTest {
+public class ArrayTest extends AbstractTest {
     {
         storage = new ArrayStorage();
     }

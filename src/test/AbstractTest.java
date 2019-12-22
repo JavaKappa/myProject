@@ -12,7 +12,7 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-abstract public class AbstractStorageTest {
+abstract public class AbstractTest {
     protected Resume R1, R2, R3;
 
     protected IStorage storage;
@@ -64,6 +64,10 @@ abstract public class AbstractStorageTest {
     @Test
     public void load() {
         Resume load = storage.load(R1.getUuid());
+        System.out.println(R1.getContacts());
+        System.out.println(load.getContacts());
+        System.out.println(R1.getSections());
+        System.out.println(load.getSections());
         assertEquals(R1, load);
         assertEquals(R2, storage.load(R2.getUuid()));
         assertEquals(R3, storage.load(R3.getUuid()));

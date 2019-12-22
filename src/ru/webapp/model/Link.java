@@ -10,8 +10,9 @@ public class Link implements Serializable {
     private final String name;
     private final String url;
 
+
     public Link() {
-        this("", null);
+        this("", "");
     }
 
     @Override

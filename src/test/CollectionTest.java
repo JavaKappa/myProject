@@ -3,7 +3,7 @@ import storage.ArrayStorage;
 /**
  * Капу пк
  * 16.12.2019
- */public class CollectionStorageTest extends AbstractStorageTest {
+ */public class CollectionTest extends AbstractTest {
     {
         storage = new ArrayStorage();
     }
