@@ -1,6 +1,6 @@
 package ru.webapp.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.*;
 
@@ -11,14 +11,19 @@ import java.util.*;
  */
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Comparable<Resume>, Serializable {
     private static final long serialVersionUID = 1L;
+    private String uuid;
+    private String fullName;
+    private String location;
+    private String homePage;
+    private Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
+    private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
-    public static final Resume EMPTY;
 
-    static {
-        EMPTY = new Resume();
-    }
+
+
 
     public Resume() {
 
@@ -27,14 +32,6 @@ public class Resume implements Comparable<Resume>, Serializable {
     public String getUuid() {
         return uuid;
     }
-
-    private String uuid;
-    private String fullName;
-    private String location;
-    private String homePage;
-    private Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
-    private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
-
 
     public Map<ContactType, String> getContacts() {
         return contacts;

@@ -1,28 +1,33 @@
 package ru.webapp.model;
 
+import util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.MonthDay;
-import java.time.Year;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
 import java.util.Objects;
 
 /**
  * Капу пк
  * 05.12.2019
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
     private String companyName;
     private Link organizationWebSite;
-    private Period[] periods;
+    private Period[] periods = new Period[0];
 
     public Organization(String companyName, Link organizationWebSite, Period... periods) {
         this.companyName = companyName;
         this.organizationWebSite = organizationWebSite;
         this.periods = periods;
+
+    }
+
+    public Organization() {
     }
 
 
@@ -34,8 +39,10 @@ public class Organization implements Serializable {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
+
         final Organization other = (Organization) obj;
-        if (!this.companyName.equals(other.companyName)) {
+
+        if (this.companyName != null && !this.companyName.equals(other.companyName)) {
             return false;
         }
         if (this.organizationWebSite != null && !this.organizationWebSite.equals(other.organizationWebSite)) {
@@ -57,9 +64,12 @@ public class Organization implements Serializable {
      * Капу пк
      * 05.12.2019
      */
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Period implements Serializable {
         public static final LocalDate NOW = LocalDate.of(3000, 1, 1);
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate startDate;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate endDate;
         private String position;
         private String content;

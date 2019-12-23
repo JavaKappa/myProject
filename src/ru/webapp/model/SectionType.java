@@ -1,5 +1,7 @@
 package ru.webapp.model;
 
+import javax.xml.bind.annotation.XmlEnum;
+
 public enum SectionType {
     OBJECTIVE("Позиция"),
     ACHIEVEMENT("Достижения"),

@@ -1,26 +1,31 @@
 package storage;
 
-import ru.webapp.model.Resume;
+import ru.webapp.model.*;
 import util.XmlParser;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class XmlStorage extends FileStorage {
+    private XmlParser parser;
 
     public XmlStorage(String path) {
         super(path);
+        parser = new XmlParser(Resume.class, TextSection.class,Section.class, TextSectionWithTitle.class,
+                 OrganizationSection.class,Section.class, Organization.class, Organization.Period.class, Link.class, SectionType.class);
     }
 
     @Override
     protected void write(ObjectOutputStream os, Resume resume) throws IOException {
-        Writer w = new OutputStreamWriter(os, StandardCharsets.UTF_8);
-        XmlParser.write(w, resume);
+        try(Writer w = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
+            parser.marshalling(w, resume);
+        }
     }
 
     @Override
     protected Resume read(ObjectInputStream os) throws IOException {
-        Reader r = new InputStreamReader(os);
-        return XmlParser.reader(r, Resume.class);
+        try(Reader r = new InputStreamReader(os)) {
+            return parser.unmarshalling(r);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package ru.webapp.model;
 
 
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +25,9 @@ public class TextSectionWithTitle extends Section implements Serializable {
 
     public TextSectionWithTitle(SectionType sectionType) {
         this.sectionType = sectionType;
+    }
+
+    public TextSectionWithTitle() {
     }
 
     public String getTitle() {

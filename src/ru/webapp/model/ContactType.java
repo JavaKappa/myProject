@@ -1,5 +1,8 @@
 package ru.webapp.model;
 
+import javax.xml.bind.annotation.XmlEnum;
+
+@XmlEnum
 public enum ContactType {
     PHONE("Номер телефона"),
     MAIL("Электронная почта"),

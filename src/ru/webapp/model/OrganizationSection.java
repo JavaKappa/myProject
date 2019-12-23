@@ -1,5 +1,6 @@
 package ru.webapp.model;
 
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,13 +11,15 @@ import java.util.Collection;
  */
 public class OrganizationSection  extends Section implements Serializable {
 
-
     private Collection<Organization> organizations;
 
 
     public OrganizationSection(SectionType sectionType, Organization... organizations) {
         this.sectionType = sectionType;
         this.organizations = Arrays.asList(organizations);
+    }
+
+    public OrganizationSection() {
     }
 
     @Override

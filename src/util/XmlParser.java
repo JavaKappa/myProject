@@ -1,6 +1,6 @@
 package util;
 
-import ru.webapp.model.Resume;
+
 import storage.WebAppException;
 
 import javax.xml.bind.JAXBContext;
@@ -11,25 +11,36 @@ import java.io.Reader;
 import java.io.Writer;
 
 public class XmlParser {
+    private final JAXBContext context;
+    private final Marshaller marshaller;
+    private final Unmarshaller unmarshaller;
 
 
-    public static  <T> void write(Writer writer, T object) {
+    public XmlParser(Class... classesToBeBound) {
         try {
-            Marshaller marshaller = JAXBContext.newInstance(object.getClass()).createMarshaller();
+            context = JAXBContext.newInstance(classesToBeBound);
+            marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marshaller.marshal(object, writer);
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            unmarshaller = context.createUnmarshaller();
         } catch (JAXBException e) {
-            throw new WebAppException("JAXB problem", e);
+            throw new WebAppException("JAXB init failed", e);
         }
     }
 
-    public static <T> T reader(Reader reader, Class<T> clazz) {
+    public <T> T unmarshalling(Reader r) {
         try {
-            JAXBContext context = JAXBContext.newInstance(clazz);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            return (T) unmarshaller.unmarshal(reader);
+            return (T) unmarshaller.unmarshal(r);
         } catch (JAXBException e) {
-            throw new WebAppException("JAXB problem", e);
+            throw new WebAppException("Unmarshalling failed", e);
+        }
+    }
+
+    public <T> void marshalling(Writer w, T obj) {
+        try {
+            marshaller.marshal(obj, w);
+        } catch (JAXBException e) {
+            throw new WebAppException("Marshalling failed", e);
         }
     }
 }

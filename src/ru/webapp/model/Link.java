@@ -1,11 +1,14 @@
 package ru.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 
 /**
  * Капу пк
  * 04.12.2019
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Link implements Serializable {
     private final String name;
     private final String url;

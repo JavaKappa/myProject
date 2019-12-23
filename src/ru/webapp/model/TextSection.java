@@ -1,5 +1,6 @@
 package ru.webapp.model;
 
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -7,15 +8,17 @@ import java.util.Arrays;
  * Капу пк
  * 05.12.2019
  */
+
 public class TextSection extends Section implements Serializable {
     private static final long serialVersionUID = 1L;
-
-
     protected String[] comments;
 
     public TextSection(SectionType sectionType, String... comments) {
         this.sectionType = sectionType;
         this.comments = comments;
+    }
+
+    public TextSection() {
     }
 
 
