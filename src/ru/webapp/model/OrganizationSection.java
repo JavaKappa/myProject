@@ -44,4 +44,12 @@ public class OrganizationSection  extends Section implements Serializable {
                 ", sectionType=" + sectionType +
                 '}';
     }
+
+    public Collection<Organization> getOrganizations() {
+        return organizations;
+    }
+
+    public void setOrganizations(Collection<Organization> organizations) {
+        this.organizations = organizations;
+    }
 }

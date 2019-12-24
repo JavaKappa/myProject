@@ -60,6 +60,30 @@ public class Organization implements Serializable {
                 '}';
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public Link getOrganizationWebSite() {
+        return organizationWebSite;
+    }
+
+    public void setOrganizationWebSite(Link organizationWebSite) {
+        this.organizationWebSite = organizationWebSite;
+    }
+
+    public Period[] getPeriods() {
+        return periods;
+    }
+
+    public void setPeriods(Period[] periods) {
+        this.periods = periods;
+    }
+
     /**
      * Капу пк
      * 05.12.2019

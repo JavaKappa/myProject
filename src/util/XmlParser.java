@@ -1,6 +1,5 @@
 package util;
 
-
 import storage.WebAppException;
 
 import javax.xml.bind.JAXBContext;

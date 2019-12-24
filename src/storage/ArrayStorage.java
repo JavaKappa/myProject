@@ -62,6 +62,12 @@ public class ArrayStorage extends AbstractStorage<Integer> {
     public int size() {
         return size;
     }
+
+    @Override
+    public boolean isSectionSupported() {
+        return true;
+    }
+
     @Override
     protected Integer getContext(String uuid) {
         for (int i = 0; i < LIMIT; i++) {

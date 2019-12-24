@@ -2,7 +2,6 @@ package storage;
 
 import ru.webapp.model.*;
 import util.XmlParser;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
@@ -14,6 +13,8 @@ public class XmlStorage extends FileStorage {
         parser = new XmlParser(Resume.class, TextSection.class,Section.class, TextSectionWithTitle.class,
                  OrganizationSection.class,Section.class, Organization.class, Organization.Period.class, Link.class, SectionType.class);
     }
+
+
 
     @Override
     protected void write(ObjectOutputStream os, Resume resume) throws IOException {
@@ -27,5 +28,10 @@ public class XmlStorage extends FileStorage {
         try(Reader r = new InputStreamReader(os)) {
             return parser.unmarshalling(r);
         }
+    }
+
+    @Override
+    public boolean isSectionSupported() {
+        return true;
     }
 }
