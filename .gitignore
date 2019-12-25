@@ -3,6 +3,10 @@
 Json_File_Storage/
 Xml_storage/
 baseJavaProject.iml
+.war
+.jar
+.ear
+.gitignore
 file_Storage/
 lib/
 out/
