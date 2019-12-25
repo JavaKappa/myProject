@@ -10,7 +10,6 @@ import java.time.Month;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 abstract public class AbstractTest {
     protected Resume R1, R2, R3;

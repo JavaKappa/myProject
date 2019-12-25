@@ -5,9 +5,8 @@
          version="4.0">
     <servlet>
         <servlet-name>resumeServlet</servlet-name>
-        <servlet-class>
-            ru.webapp.web.ResumeServlet
-        </servlet-class>
+        <servlet-class>ru.webapp.web.ResumeServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>resumeServlet</servlet-name>
