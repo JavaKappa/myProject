@@ -1,4 +1,4 @@
-package util;
+package ru.webapp.util;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.LocalDate;

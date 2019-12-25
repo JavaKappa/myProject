@@ -2,8 +2,8 @@
 import org.junit.Before;
 import org.junit.Test;
 import ru.webapp.model.*;
-import storage.IStorage;
-import storage.WebAppException;
+import ru.webapp.storage.IStorage;
+import ru.webapp.storage.WebAppException;
 
 import java.time.LocalDate;
 import java.time.Month;

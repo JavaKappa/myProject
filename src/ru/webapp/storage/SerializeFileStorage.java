@@ -1,9 +1,8 @@
-package storage;
+package ru.webapp.storage;
 
 import ru.webapp.model.Resume;
 
 import java.io.*;
-import java.util.*;
 
 
 /**

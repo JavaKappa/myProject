@@ -2,7 +2,7 @@ import org.junit.Test;
 import ru.webapp.model.ContactType;
 import ru.webapp.model.Resume;
 import ru.webapp.model.SectionType;
-import storage.SerializeFileStorage;
+import ru.webapp.storage.SerializeFileStorage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

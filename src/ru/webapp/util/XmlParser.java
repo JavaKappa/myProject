@@ -1,6 +1,6 @@
-package util;
+package ru.webapp.util;
 
-import storage.WebAppException;
+import ru.webapp.storage.WebAppException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

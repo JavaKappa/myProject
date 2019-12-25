@@ -1,7 +1,7 @@
-package storage;
+package ru.webapp.storage;
 
 import ru.webapp.model.Resume;
-import util.JsonParser;
+import ru.webapp.util.JsonParser;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

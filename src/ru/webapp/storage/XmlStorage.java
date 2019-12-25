@@ -1,7 +1,7 @@
-package storage;
+package ru.webapp.storage;
 
 import ru.webapp.model.*;
-import util.XmlParser;
+import ru.webapp.util.XmlParser;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 

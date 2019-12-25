@@ -1,4 +1,4 @@
-package util;
+package ru.webapp.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

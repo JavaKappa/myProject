@@ -1,4 +1,4 @@
-import storage.XmlStorage;
+import ru.webapp.storage.XmlStorage;
 
 public class XmlTest extends AbstractTest {
     {
