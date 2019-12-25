@@ -26,4 +26,9 @@ public class JsonStorage extends FileStorage {
     protected Resume read(ObjectInputStream is) {
         return JsonParser.read(new InputStreamReader(is, StandardCharsets.UTF_8), Resume.class);
     }
+
+    @Override
+    public boolean isSectionSupported() {
+        return false;
+    }
 }

@@ -23,25 +23,25 @@ abstract public class AbstractTest {
         R1 = new Resume("Полное Имя1", "location1");
         R1.addContact(ContactType.MAIL, "mail1@ya.ru");
         R1.addContact(ContactType.PHONE, "11111");
-        R1.addSection(SectionType.ACHIEVEMENT, new TextSection(SectionType.ACHIEVEMENT,"javarush", "basejava", "topjava"));
         R1.addContact(ContactType.PHONE, "11111");
         R2 = new Resume("Полное Имя2", "Location1");
         R2.addContact(ContactType.SKYPE, "skype2");
         R2.addContact(ContactType.PHONE, "22222");
         R3 = new Resume("Полное Имя3", "");
-        R3.addSection(SectionType.OBJECTIVE, new TextSection(SectionType.OBJECTIVE, "ggg", "zzz"));
-        R3.addSection(SectionType.EXPERIENCE, new TextSectionWithTitle(SectionType.EXPERIENCE, "ggg", "zzz", "gghh"));
-        R1.addSection(SectionType.QUALIFICATIONS, new TextSection(SectionType.QUALIFICATIONS,"Java", "SQL"));
-        R1.addOrganizationSection(SectionType.EXPERIENCE,
-                new Organization("Organization11", null,
-                        new Organization.Period(LocalDate.of(2005, Month.JANUARY, 1), Organization.Period.NOW, "position1", "content1"),
-                        new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "position2", "content2")));
-        R1.addOrganizationSection(SectionType.EDUCATION,
-                new Organization("Institute", null,
-                        new Organization.Period(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
-                        new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT facultet")),
-                new Organization("Organization12", new Link("Organizations1", "http://Organization12.ru")));
-
+        if (storage.isSectionSupported()) {
+            R3.addSection(SectionType.OBJECTIVE, new TextSection(SectionType.OBJECTIVE, "ggg", "zzz"));
+            R3.addSection(SectionType.EXPERIENCE, new TextSectionWithTitle(SectionType.EXPERIENCE, "ggg", "zzz", "gghh"));
+            R1.addSection(SectionType.QUALIFICATIONS, new TextSection(SectionType.QUALIFICATIONS, "Java", "SQL"));
+            R1.addOrganizationSection(SectionType.EXPERIENCE,
+                    new Organization("Organization11", null,
+                            new Organization.Period(LocalDate.of(2005, Month.JANUARY, 1), Organization.Period.NOW, "position1", "content1"),
+                            new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "position2", "content2")));
+            R1.addOrganizationSection(SectionType.EDUCATION,
+                    new Organization("Institute", null,
+                            new Organization.Period(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
+                            new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT facultet")),
+                    new Organization("Organization12", new Link("Organizations1", "http://Organization12.ru")));
+        }
         storage.clear();
         storage.save(R3);
         storage.save(R1);
@@ -55,7 +55,7 @@ abstract public class AbstractTest {
     }
 
     @Test
-    public void update(){
+    public void update() {
         R2.setFullName("Updated N2");
         storage.update(R2);
         assertEquals(R2, storage.load(R2.getUuid()));
@@ -64,10 +64,6 @@ abstract public class AbstractTest {
     @Test
     public void load() {
         Resume load = storage.load(R1.getUuid());
-        System.out.println(R1.getContacts());
-        System.out.println(load.getContacts());
-        System.out.println(R1.getSections());
-        System.out.println(load.getSections());
         assertEquals(R1, load);
         assertEquals(R2, storage.load(R2.getUuid()));
         assertEquals(R3, storage.load(R3.getUuid()));
@@ -95,12 +91,12 @@ abstract public class AbstractTest {
     }
 
     @Test
-    public void size(){
+    public void size() {
         assertEquals(3, storage.size());
     }
 
     @Test(expected = WebAppException.class)
-    public void deleteMissed()  {
+    public void deleteMissed() {
         storage.delete("dummy");
     }
 
@@ -110,11 +106,10 @@ abstract public class AbstractTest {
     }
 
     @Test(expected = WebAppException.class)
-    public void updateMissed()  {
+    public void updateMissed() {
         Resume resume = new Resume("dummy", "fullName_U1", "location_U1");
         storage.update(resume);
     }
-
 
 
 }

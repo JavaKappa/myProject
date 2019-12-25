@@ -55,6 +55,11 @@ public class CollectionStorage extends AbstractStorage<Integer> {
     }
 
     @Override
+    public boolean isSectionSupported() {
+        return true;
+    }
+
+    @Override
     protected Integer getContext(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
