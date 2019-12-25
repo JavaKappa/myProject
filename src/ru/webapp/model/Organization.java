@@ -1,6 +1,6 @@
 package ru.webapp.model;
 
-import util.LocalDateAdapter;
+import ru.webapp.util.LocalDateAdapter;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;

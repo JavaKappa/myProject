@@ -2,15 +2,14 @@
 import org.junit.Before;
 import org.junit.Test;
 import ru.webapp.model.*;
-import storage.IStorage;
-import storage.WebAppException;
+import ru.webapp.storage.IStorage;
+import ru.webapp.storage.WebAppException;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 abstract public class AbstractTest {
     protected Resume R1, R2, R3;

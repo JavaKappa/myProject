@@ -1,4 +1,4 @@
-import storage.JsonStorage;
+import ru.webapp.storage.JsonStorage;
 
 public class JsonFileTest extends AbstractTest {
     {

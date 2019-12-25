@@ -1,4 +1,4 @@
-import storage.MapStorage;
+import ru.webapp.storage.MapStorage;
 
 /**
  * Капу пк

@@ -1,4 +1,4 @@
-import storage.ArrayStorage;
+import ru.webapp.storage.ArrayStorage;
 
 public class ArrayTest extends AbstractTest {
     {
