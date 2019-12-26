@@ -14,11 +14,11 @@ public class ResumeServlet extends javax.servlet.http.HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        try (Writer writer = response.getWriter();){
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        try (Writer writer = response.getWriter()){
             String name = request.getParameter("name");
-            writer.write("Тест сервлет: " + name);
+            writer.write("Тест сервлет: привет Web =) и  " + name);
         } catch (IOException e) {
             throw new WebAppException("get writer failed", e);
         }
