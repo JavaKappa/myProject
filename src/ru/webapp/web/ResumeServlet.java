@@ -18,7 +18,7 @@ public class ResumeServlet extends javax.servlet.http.HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         try (Writer writer = response.getWriter()){
             String name = request.getParameter("name");
-            writer.write("Тест сервлет: привет Web =) и  " + name);
+            writer.write("Тест сервлет: привет Web =) иххххаааа  " + name);
         } catch (IOException e) {
             throw new WebAppException("get writer failed", e);
         }
