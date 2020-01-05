@@ -152,4 +152,8 @@ public class Resume implements Comparable<Resume>, Serializable {
                 ", contacts=" + contacts +
                 '}';
     }
+
+    public String getLocation() {
+        return location;
+    }
 }

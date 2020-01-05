@@ -3,17 +3,14 @@ package ru.webapp.storage;
 import ru.webapp.model.Resume;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Капу пк
  * 22.12.2019
  */
 abstract public class FileStorage extends AbstractStorage<File> {
-    public File pathToFiles = new File("file_storage");
+    public File pathToFiles = new File("C:\\Users\\Kapy\\IdeaProjects\\baseJavaProject\\file_storage");
 
 
     public FileStorage(String path) {
