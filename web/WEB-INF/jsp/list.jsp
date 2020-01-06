@@ -3,6 +3,7 @@
 <%@ page import="ru.webapp.model.ContactType" %>
 <%@ page import="ru.webapp.storage.FileStorage" %>
 <%@ page import="ru.webapp.storage.SerializeFileStorage" %>
+<%@ page import="ru.webapp.web.ResumeServlet" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
@@ -34,7 +35,7 @@
         <th></th>
     </tr>
     <%
-        request.setAttribute("resumeList", new SerializeFileStorage().getAllSorted());
+        request.setAttribute("resumeList", ResumeServlet.storage.getAllSorted());
     %>
     <c:forEach items="${resumeList}" var="resume">
         <jsp:useBean id="resume" type="ru.webapp.model.Resume"/>

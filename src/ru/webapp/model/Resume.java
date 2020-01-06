@@ -22,11 +22,9 @@ public class Resume implements Comparable<Resume>, Serializable {
     private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
 
-
-
-
     public Resume() {
-
+        uuid = UUID.randomUUID().toString();
+        fullName = "without name";
     }
 
     public String getUuid() {
@@ -105,36 +103,45 @@ public class Resume implements Comparable<Resume>, Serializable {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
-
             return true;
         }
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
         final Resume other = (Resume) obj;
-        if (!this.sections.equals(other.sections)) {
-            return false;
+        if (this.sections != null && other.sections != null) {
+            if (!this.sections.equals(other.sections)) {
+                return false;
+            }
         }
-        if (!this.contacts.equals(other.contacts)) {
-            return false;
+        if (this.contacts != null && other.contacts != null) {
+            if (!this.contacts.equals(other.contacts)) {
+                return false;
+            }
         }
 
 
         return Objects.equals(hashCode(), obj.hashCode())
-                && Objects.equals(this.uuid, other.uuid) && Objects.equals(getFullName(), other.getFullName());
+                && Objects.equals(this.uuid, other.uuid) &&
+                Objects.equals(getFullName(), other.getFullName());
     }
 
 
     @Override
     public int compareTo(Resume o) {
+        Objects.requireNonNull(o);
+        if (this.getFullName() == null) {
+            throw new IllegalStateException();
+        } else if (o.getFullName() == null) {
+            throw new IllegalStateException();
+        }
         int cmp = this.getFullName().compareTo(o.getFullName());
-        if (cmp != 0) {
-            return cmp;
-        } else {
+        if (cmp == 0) {
             return Objects.compare(this.getUuid(), o.getUuid(), Comparator.naturalOrder());
+        } else {
+            return cmp;
         }
     }
-
 
 
     public Map<SectionType, Section> getSections() {
