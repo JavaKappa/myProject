@@ -11,6 +11,10 @@ import java.io.*;
  */
 public class SerializeFileStorage extends FileStorage {
 
+    public SerializeFileStorage(String path) {
+        super(path);
+    }
+
     @Override
     protected void write(ObjectOutputStream os, Resume resume) throws IOException{
             os.writeObject(resume);

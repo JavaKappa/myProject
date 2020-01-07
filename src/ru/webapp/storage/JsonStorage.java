@@ -12,9 +12,6 @@ public class JsonStorage extends FileStorage {
         super(path);
     }
 
-    public JsonStorage() {
-    }
-
     @Override
     protected void write(ObjectOutputStream os, Resume resume) throws IOException{
         try (Writer w = new OutputStreamWriter(os, StandardCharsets.UTF_8)){

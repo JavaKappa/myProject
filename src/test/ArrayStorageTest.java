@@ -1,6 +1,6 @@
 import ru.webapp.storage.ArrayStorage;
 
-public class ArrayTest extends AbstractTest {
+public class ArrayStorageTest extends AbstractStorageTest {
     {
         storage = new ArrayStorage();
     }

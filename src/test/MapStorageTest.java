@@ -1,20 +1,15 @@
-import ru.webapp.storage.ArrayStorage;
+import ru.webapp.storage.MapStorage;
 
 /**
  * Капу пк
  * 16.12.2019
- */public class CollectionTest extends AbstractTest {
-    {
-        storage = new ArrayStorage();
-    }
-}
-//    {storage = new CollectionStorage();}
-
-
+ */
+public class MapStorageTest extends AbstractStorageTest {
+    {storage = new MapStorage();}
 //    private Resume r1, r2, r3, r4, r5, r6, r7, r8, r9;
 //
 //
-//    protected IStorage storage = new CollectionStorage();
+//    protected IStorage storage = new MapStorage();
 //
 //    {
 //        r1 = new Resume("Игорь", "Allworld");
@@ -118,4 +113,4 @@ import ru.webapp.storage.ArrayStorage;
 //        storage.delete(r1.getUuid());
 //        Assert.assertEquals(5, storage.size());
 //    }
-//}
+}

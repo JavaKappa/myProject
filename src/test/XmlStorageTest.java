@@ -1,6 +1,6 @@
 import ru.webapp.storage.XmlStorage;
 
-public class XmlTest extends AbstractTest {
+public class XmlStorageTest extends AbstractStorageTest {
     {
         storage = new XmlStorage("Xml_storage");
     }

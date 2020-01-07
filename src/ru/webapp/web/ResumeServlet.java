@@ -12,7 +12,8 @@ import java.util.Objects;
 
 
 public class ResumeServlet extends javax.servlet.http.HttpServlet {
-    public static IStorage storage = new SerializeFileStorage();
+    //TODO: refactor IStorge
+    public static IStorage storage = new SerializeFileStorage("C:\\Users\\qwark\\IdeaProjects\\myProject\\file_storage");
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
     }
@@ -25,12 +26,12 @@ public class ResumeServlet extends javax.servlet.http.HttpServlet {
             case "delete":
                 storage.delete(uuid);
                 response.sendRedirect("list");
-                break;
+                return;
             case "create":
                 r = new Resume();
                 storage.save(r);
                 response.sendRedirect("list");
-                break;
+                return;
             case "view":
             case "edit":
                 r = storage.load(uuid);
@@ -38,7 +39,6 @@ public class ResumeServlet extends javax.servlet.http.HttpServlet {
             default:
                 throw new IllegalArgumentException();
         }
-        Objects.requireNonNull(r);
         request.setAttribute("resume", r);
         request.getRequestDispatcher("view".equals(action) ?
                 "/WEB-INF/jsp/view.jsp" : "/WEB-INF/jsp/edit.jsp").forward(request, response);

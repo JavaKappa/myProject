@@ -10,14 +10,11 @@ import java.util.*;
  * 22.12.2019
  */
 abstract public class FileStorage extends AbstractStorage<File> {
-    public File pathToFiles = new File("C:\\Users\\Kapy\\IdeaProjects\\baseJavaProject\\file_storage");
+    public File pathToFiles;
 
 
     public FileStorage(String path) {
         pathToFiles = new File(path);
-    }
-
-    public FileStorage() {
     }
 
     @Override
