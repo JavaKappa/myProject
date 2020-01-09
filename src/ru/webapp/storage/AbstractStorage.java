@@ -1,9 +1,11 @@
 package ru.webapp.storage;
 
+import ru.webapp.WebAppException;
 import ru.webapp.model.Resume;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 abstract public class AbstractStorage<C> implements IStorage{
@@ -92,7 +94,6 @@ abstract public class AbstractStorage<C> implements IStorage{
 
 
     void doException(String message) {
-        logger.severe(message);
         throw new WebAppException(message);
     }
 }

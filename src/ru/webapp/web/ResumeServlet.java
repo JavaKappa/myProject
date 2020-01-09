@@ -1,5 +1,6 @@
 package ru.webapp.web;
 
+import ru.webapp.WebAppConfig;
 import ru.webapp.model.Resume;
 import ru.webapp.storage.IStorage;
 import ru.webapp.storage.SerializeFileStorage;
@@ -12,8 +13,7 @@ import java.util.Objects;
 
 
 public class ResumeServlet extends javax.servlet.http.HttpServlet {
-    //TODO: refactor IStorge
-    public static IStorage storage = new SerializeFileStorage("C:\\Users\\qwark\\IdeaProjects\\myProject\\file_storage");
+    public static IStorage storage = WebAppConfig.get().getStorage();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
     }
