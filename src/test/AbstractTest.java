@@ -11,7 +11,7 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
-abstract public class AbstractStorageTest {
+abstract public class AbstractTest {
     protected Resume R1, R2, R3;
 
     protected IStorage storage;
@@ -28,9 +28,9 @@ abstract public class AbstractStorageTest {
         R2.addContact(ContactType.PHONE, "22222");
         R3 = new Resume("Полное Имя3", "");
         if (storage.isSectionSupported()) {
-            R3.addSection(SectionType.OBJECTIVE, new TextSection(SectionType.OBJECTIVE, "ggg", "zzz"));
+            R3.addSection(SectionType.OBJECTIVE, new TextSection(SectionType.OBJECTIVE, "zzz"));
             R3.addSection(SectionType.EXPERIENCE, new TextSectionWithTitle(SectionType.EXPERIENCE, "ggg", "zzz", "gghh"));
-            R1.addSection(SectionType.QUALIFICATIONS, new TextSection(SectionType.QUALIFICATIONS, "Java", "SQL"));
+            R1.addSection(SectionType.QUALIFICATIONS, new TextSection(SectionType.QUALIFICATIONS, "SQL"));
             R1.addOrganizationSection(SectionType.EXPERIENCE,
                     new Organization("Organization11", null,
                             new Organization.Period(LocalDate.of(2005, Month.JANUARY, 1), Organization.Period.NOW, "position1", "content1"),

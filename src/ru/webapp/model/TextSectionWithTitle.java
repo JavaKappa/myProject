@@ -10,17 +10,18 @@ import java.util.List;
  * Капу пк
  * 05.12.2019
  */
-public class TextSectionWithTitle extends Section implements Serializable {
+public class TextSectionWithTitle extends TextSection implements Serializable {
     private static final long serialVersionUID = 1L;
     private String title;
-    protected String[] comments;
 
 
 
     public TextSectionWithTitle(SectionType sectionType, String title, String... comments) {
         this.sectionType = sectionType;
         this.title = title;
-        this.comments = comments;
+        StringBuilder sb = new StringBuilder();
+        Arrays.stream(comments).forEach(sb::append);
+        value = sb.toString();
     }
 
     public TextSectionWithTitle(SectionType sectionType) {
@@ -48,23 +49,16 @@ public class TextSectionWithTitle extends Section implements Serializable {
         if (!this.title.equals(other.title)) {
             return false;
         }
-        if (comments.length != other.comments.length) {
-            return false;
-        }
-        for (int i = 0; i < comments.length; i++) {
-            if (!comments[i].equals(other.comments[i])) {
-                return false;
-            }
-        }
-        return true;
+        return value.equals(other.value);
     }
+
 
     @Override
     public String toString() {
         return "TextSectionWithTitle{" +
                 "title='" + title + '\'' +
-                ", comments=" + Arrays.toString(comments) +
                 ", sectionType=" + sectionType +
+                ", value='" + value + '\'' +
                 '}';
     }
 }

@@ -9,7 +9,7 @@ import java.util.Collection;
  * Капу пк
  * 05.12.2019
  */
-public class OrganizationSection  extends Section implements Serializable {
+public class OrganizationSection  extends TextSection implements Serializable {
 
     private Collection<Organization> organizations;
 

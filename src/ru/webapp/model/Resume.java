@@ -55,8 +55,8 @@ public class Resume implements Comparable<Resume>, Serializable {
         this.homePage = homePage;
     }
 
-    public void addObjective(String... values) {
-        sections.put(SectionType.OBJECTIVE, new TextSection(SectionType.OBJECTIVE, values));
+    public void addObjective(String value) {
+        sections.put(SectionType.OBJECTIVE, new TextSection(SectionType.OBJECTIVE, value));
     }
 
     public void addTextSectionWithTitle(SectionType type, String title, String... values) {

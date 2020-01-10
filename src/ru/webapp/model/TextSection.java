@@ -11,11 +11,10 @@ import java.util.Arrays;
 
 public class TextSection extends Section implements Serializable {
     private static final long serialVersionUID = 1L;
-    protected String[] comments;
 
-    public TextSection(SectionType sectionType, String... comments) {
+    public TextSection(SectionType sectionType, String value) {
         this.sectionType = sectionType;
-        this.comments = comments;
+        this.value = value;
     }
 
     public TextSection() {
@@ -34,21 +33,14 @@ public class TextSection extends Section implements Serializable {
         if (this.sectionType != other.sectionType) {
             return false;
         }
-        if (comments.length != other.comments.length) {
-            return false;
-        }
-        for (int i = 0; i < comments.length; i++) {
-            if (!comments[i].equals(other.comments[i])) {
-                return false;
-            }
-        }
-        return true;
+        return value.equals(other.value);
     }
+
 
     @Override
     public String toString() {
         return "TextSection{" +
-                "comments=" + Arrays.toString(comments) +
+                "value='" + value + '\'' +
                 ", sectionType=" + sectionType +
                 '}';
     }

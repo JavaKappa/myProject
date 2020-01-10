@@ -3,7 +3,7 @@ import ru.webapp.storage.ArrayStorage;
 /**
  * Капу пк
  * 16.12.2019
- */public class CollectionStorageTest extends AbstractStorageTest {
+ */public class CollectionStorageTest extends AbstractTest {
     {
         storage = new ArrayStorage();
     }

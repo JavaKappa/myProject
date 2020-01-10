@@ -9,6 +9,12 @@ public class Section implements Serializable{
     private static final long serialVersionUID = 1L;
     protected SectionType sectionType;
 
+    public String getValue() {
+        return value;
+    }
+
+    protected String value;
+
 
     @Override
     public String toString() {

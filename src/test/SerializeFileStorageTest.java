@@ -7,15 +7,15 @@ import ru.webapp.storage.SerializeFileStorage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class SerializeFileStorageTest extends AbstractStorageTest {
+public class SerializeFileStorageTest extends AbstractTest {
     {
-        storage = new SerializeFileStorage("C:\\Users\\qwark\\IdeaProjects\\myProject\\file_storage");
+        storage = new SerializeFileStorage("C:\\Users\\Kapy\\IdeaProjects\\baseJavaProject\\file_storage");
     }
 
 
     @Test
     public void testSectionEquals() {
-        R1.addObjective("1", "3");
+        R1.addObjective("3");
         storage.update(R1);
 
         Resume rr = storage.load(R1.getUuid());
@@ -24,10 +24,10 @@ public class SerializeFileStorageTest extends AbstractStorageTest {
     }
     @Test
     public void testSectionEqualsB() {
-        R1.addObjective("1", "3");
+        R1.addObjective("3");
         storage.update(R1);
         Resume rr = storage.load(R1.getUuid());
-        rr.addObjective("1", "3", "4");
+        rr.addObjective("4");
         assertNotEquals(R1, rr);
     }
     @Test
