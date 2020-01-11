@@ -1,7 +1,6 @@
 package ru.webapp.model;
 
 
-import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -10,30 +9,31 @@ import java.util.List;
  * Капу пк
  * 05.12.2019
  */
-public class TextSectionWithTitle extends TextSection implements Serializable {
+public class TextSectionWithTitle extends Section implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String title;
+    private List<String> values;
 
 
 
-    public TextSectionWithTitle(SectionType sectionType, String title, String... comments) {
+    public TextSectionWithTitle(SectionType sectionType, String... comments) {
         this.sectionType = sectionType;
-        this.title = title;
         StringBuilder sb = new StringBuilder();
         Arrays.stream(comments).forEach(sb::append);
         value = sb.toString();
     }
 
     public TextSectionWithTitle(SectionType sectionType) {
+        sectionType = SectionType.ACHIEVEMENT;
         this.sectionType = sectionType;
     }
 
     public TextSectionWithTitle() {
     }
 
-    public String getTitle() {
-        return title;
+    public TextSectionWithTitle(List<String> values) {
+        this.values = values;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -46,9 +46,7 @@ public class TextSectionWithTitle extends TextSection implements Serializable {
         if (this.sectionType != other.sectionType) {
             return false;
         }
-        if (!this.title.equals(other.title)) {
-            return false;
-        }
+
         return value.equals(other.value);
     }
 
@@ -56,9 +54,12 @@ public class TextSectionWithTitle extends TextSection implements Serializable {
     @Override
     public String toString() {
         return "TextSectionWithTitle{" +
-                "title='" + title + '\'' +
                 ", sectionType=" + sectionType +
                 ", value='" + value + '\'' +
                 '}';
+    }
+
+    public List<String> getValues() {
+        return values;
     }
 }

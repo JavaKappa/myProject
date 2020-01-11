@@ -11,12 +11,18 @@ import java.util.Arrays;
 
 public class TextSection extends Section implements Serializable {
     private static final long serialVersionUID = 1L;
+    protected SectionType sectionType;
+
 
     public TextSection(SectionType sectionType, String value) {
         this.sectionType = sectionType;
         this.value = value;
     }
 
+    public TextSection(String value){
+        sectionType = SectionType.OBJECTIVE;
+        this.value = value;
+    }
     public TextSection() {
     }
 

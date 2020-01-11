@@ -25,7 +25,7 @@ public class WebAppConfig {
 
     private WebAppConfig() {
         try (InputStream is = getClass().getClassLoader().getResourceAsStream("logging.properties")) {
-            storage = new SerializeFileStorage("C:\\Users\\Kapy\\IdeaProjects\\baseJavaProject\\file_storage");
+            storage = new SerializeFileStorage("C:\\Users\\qwark\\IdeaProjects\\myProject\\file_storage");
         } catch (IOException e) {
             e.printStackTrace();
         }

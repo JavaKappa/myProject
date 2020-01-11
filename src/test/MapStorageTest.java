@@ -4,7 +4,7 @@ import ru.webapp.storage.MapStorage;
  * Капу пк
  * 16.12.2019
  */
-public class MapStorageTest extends AbstractTest {
+public class MapStorageTest extends AbstractStorageTest {
     {storage = new MapStorage();}
 //    private Resume r1, r2, r3, r4, r5, r6, r7, r8, r9;
 //

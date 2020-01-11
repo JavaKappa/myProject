@@ -60,7 +60,7 @@ public class Resume implements Comparable<Resume>, Serializable {
     }
 
     public void addTextSectionWithTitle(SectionType type, String title, String... values) {
-        sections.put(type, new TextSectionWithTitle(type, title, values));
+        sections.put(type, new TextSectionWithTitle(type, title, values.toString()));
     }
 
     public Resume(String uuid, String fullName, String location) {
@@ -162,5 +162,9 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     public String getLocation() {
         return location;
+    }
+
+    public void removeContact(ContactType type) {
+        contacts.remove(type);
     }
 }

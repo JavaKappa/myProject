@@ -7,9 +7,9 @@ import ru.webapp.storage.SerializeFileStorage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class SerializeFileStorageTest extends AbstractTest {
+public class SerializeFileTest extends AbstractStorageTest {
     {
-        storage = new SerializeFileStorage("C:\\Users\\Kapy\\IdeaProjects\\baseJavaProject\\file_storage");
+        storage = new SerializeFileStorage("C:\\Users\\qwark\\IdeaProjects\\myProject\\file_storage");
     }
 
 
