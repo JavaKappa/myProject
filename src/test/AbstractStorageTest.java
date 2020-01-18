@@ -29,8 +29,8 @@ abstract public class AbstractStorageTest {
         R3 = new Resume("Полное Имя3", "");
         if (storage.isSectionSupported()) {
             R3.addSection(SectionType.OBJECTIVE, new TextSection(SectionType.OBJECTIVE, "zzz"));
-            R3.addSection(SectionType.EXPERIENCE, new TextSectionWithTitle(SectionType.EXPERIENCE, "ggg", "zzz", "gghh"));
-            R1.addSection(SectionType.QUALIFICATIONS, new TextSection(SectionType.QUALIFICATIONS, "SQL"));
+            R3.addSection(SectionType.ACHIEVEMENT, new TextSectionWithTitle(SectionType.ACHIEVEMENT, "ggg", "zzz", "gghh"));
+            R1.addSection(SectionType.QUALIFICATIONS, new TextSectionWithTitle(SectionType.QUALIFICATIONS, "SQL"));
             R1.addOrganizationSection(SectionType.EXPERIENCE,
                     new Organization("Organization11", null,
                             new Organization.Period(LocalDate.of(2005, Month.JANUARY, 1), Organization.Period.NOW, "position1", "content1"),
@@ -62,7 +62,10 @@ abstract public class AbstractStorageTest {
 
     @Test
     public void load() {
+
         Resume load = storage.load(R1.getUuid());
+        System.out.println(load);
+        System.out.println(R1);
         assertEquals(R1, load);
         assertEquals(R2, storage.load(R2.getUuid()));
         assertEquals(R3, storage.load(R3.getUuid()));

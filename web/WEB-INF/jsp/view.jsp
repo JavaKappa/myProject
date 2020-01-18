@@ -60,15 +60,20 @@
             <%
                 switch (sectionType) {
                     case OBJECTIVE:
-                    case ACHIEVEMENT:
-                    case QUALIFICATIONS:
-                    case EXPERIENCE:
             %>
             <td><h3><%=((TextSection) entry.getValue()).getValue()%>
             </h3></td>
             <td><%=section.toString()%></td>
             <%
                     break;
+                    case ACHIEVEMENT:
+                    case QUALIFICATIONS:
+            %>
+            <td><h3><%=((TextSectionWithTitle) entry.getValue()).getValue()%>
+            </h3></td>
+            <td><%=section.toString()%></td>
+            <%
+                break;
                 }
             %>
         </c:forEach>

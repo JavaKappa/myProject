@@ -3,7 +3,7 @@ package ru.webapp.model;
 import ru.webapp.util.SectionHtmlType;
 
 import javax.xml.bind.annotation.XmlEnum;
-
+@XmlEnum
 public enum SectionType {
     OBJECTIVE("Позиция", SectionHtmlType.TEXT),
     ACHIEVEMENT("Достижения", SectionHtmlType.MULTI_TEXT),
