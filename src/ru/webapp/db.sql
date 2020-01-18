@@ -3,3 +3,5 @@ CREATE TABLE resume(
     fullName TEXT not null,
     location TEXT NOT NULL
 );
+
+ALTER TABLE resume ADD COLUMN homePage TEXT;
