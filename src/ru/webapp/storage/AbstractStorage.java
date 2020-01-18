@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 abstract public class AbstractStorage<C> implements IStorage{
-    protected Logger logger = Logger.getLogger(ArrayStorage.class.getName());
+    protected Logger logger = Logger.getLogger(getClass().getName());
 
     protected abstract C getContext(String uuid);
 

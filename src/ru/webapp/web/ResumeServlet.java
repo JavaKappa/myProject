@@ -69,8 +69,7 @@ public class ResumeServlet extends javax.servlet.http.HttpServlet {
             case "create":
                 r = new Resume();
                 storage.save(r);
-                response.sendRedirect("list");
-                return;
+                break;
             case "view":
             case "edit":
                 r = storage.load(uuid);
