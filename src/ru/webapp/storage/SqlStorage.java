@@ -2,7 +2,13 @@ package ru.webapp.storage;
 
 import ru.webapp.WebAppException;
 import ru.webapp.model.Resume;
+import ru.webapp.sql.ConnectionFactory;
+import ru.webapp.sql.Sql;
 
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Collection;
 
 /**
@@ -10,6 +16,12 @@ import java.util.Collection;
  * 18.01.2020
  */
 public class SqlStorage implements IStorage {
+    private Sql sql;
+
+    public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
+        sql = new Sql(() ->
+                DriverManager.getConnection(dbUrl, dbUser, dbPassword));
+    }
 
     @Override
     public void save(Resume resume) {

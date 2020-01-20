@@ -2,6 +2,7 @@ package ru.webapp;
 
 import ru.webapp.storage.IStorage;
 import ru.webapp.storage.SerializeFileStorage;
+import ru.webapp.storage.SqlStorage;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,11 +35,9 @@ public class WebAppConfig {
             if (webAppProp == null) {
                 throw new WebAppException("webapp.properties doest not exist");
             }
-            properties.load(webAppProp);
-            storage = new SerializeFileStorage(properties.getProperty("storage.dir"));
-            properties.getProperty("db.url");
-            properties.getProperty("db.user");
-            properties.getProperty("db.password");
+            storage = new SqlStorage(properties.getProperty("db.url"),
+                    properties.getProperty("db.user"),
+                    properties.getProperty("db.password"));
 
         } catch (IOException e) {
             e.printStackTrace();
