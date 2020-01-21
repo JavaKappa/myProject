@@ -5,7 +5,6 @@ import ru.webapp.model.ContactType;
 import ru.webapp.model.Resume;
 import ru.webapp.model.SectionType;
 import ru.webapp.storage.IStorage;
-import ru.webapp.storage.SerializeFileStorage;
 import ru.webapp.util.SectionHtmlType;
 import ru.webapp.util.Util;
 
@@ -13,8 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Objects;
 
 
 public class ResumeServlet extends javax.servlet.http.HttpServlet {

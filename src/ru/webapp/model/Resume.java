@@ -21,26 +21,42 @@ public class Resume implements Comparable<Resume>, Serializable {
     private Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
     private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
+    public Resume(String uuid, String fullName, String location, String homePage) {
+        Objects.requireNonNull(fullName, "uuid is null");
+        Objects.requireNonNull(fullName, "fullname is null");
+        Objects.requireNonNull(fullName, "location is null");
+        Objects.requireNonNull(fullName, "homePage is null");
+        this.uuid = uuid;
+        this.fullName = fullName;
+        this.location = location;
+        this.homePage = homePage;
+    }
+
 
     public Resume() {
         uuid = UUID.randomUUID().toString();
         fullName = "without name";
+        location = "without location";
+        homePage = "without homePage";
+    }
+
+    public Resume(String fullName, String location) {
+        this(UUID.randomUUID().toString(), fullName, location, "");
+    }
+
+    public Resume(String fullName, String location, String homePage) {
+        this(UUID.randomUUID().toString(), fullName, location, homePage);
     }
 
     public String getUuid() {
         return uuid;
     }
-
     public Map<ContactType, String> getContacts() {
         return contacts;
     }
 
     public Section getSection(SectionType type) {
         return sections.get(type);
-    }
-
-    public Resume(String fullName, String location) {
-        this(UUID.randomUUID().toString(), fullName, location);
     }
 
     public void setFullName(String fullName) {
@@ -61,12 +77,6 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     public void addTextSectionWithTitle(SectionType type, String title, String... values) {
         sections.put(type, new TextSectionWithTitle(type, title, values.toString()));
-    }
-
-    public Resume(String uuid, String fullName, String location) {
-        this.uuid = uuid;
-        this.fullName = fullName;
-        this.location = location;
     }
 
 
