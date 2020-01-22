@@ -11,7 +11,7 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
-abstract public class AbstractStorageTest {
+abstract public class AbstractTest {
     protected Resume R1, R2, R3;
 
     protected IStorage storage;

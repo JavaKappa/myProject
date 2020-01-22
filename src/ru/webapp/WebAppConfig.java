@@ -17,6 +17,7 @@ public class WebAppConfig {
     public static final WebAppConfig INSTANCE = new WebAppConfig();
 
     private IStorage storage;
+
     private Properties properties;
 
     public static WebAppConfig get() {
@@ -39,9 +40,11 @@ public class WebAppConfig {
             storage = new SqlStorage(properties.getProperty("db.url"),
                     properties.getProperty("db.user"),
                     properties.getProperty("db.password"));
+//                    new SerializeFileStorage(properties.getProperty("storage.dir"));
+
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new WebAppException("Something with properties..", e);
         }
     }
 }

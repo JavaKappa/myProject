@@ -5,6 +5,7 @@ import ru.webapp.model.Resume;
 import ru.webapp.sql.Sql;
 import ru.webapp.sql.SqlExecutor;
 
+import java.nio.file.WatchEvent;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,7 +30,7 @@ public class SqlStorage implements IStorage {
                 ps.setString(2, resume.getFullName());
                 ps.setString(3, resume.getLocation());
                 ps.setString(4, resume.getHomePage());
-                ps.executeUpdate();
+                ps.execute();
                 return null;
             }
         });
@@ -37,7 +38,18 @@ public class SqlStorage implements IStorage {
 
     @Override
     public void update(Resume resume) throws WebAppException {
-        //sql.execute("UPDATE resume SET )
+        sql.execute("UPDATE resume SET full_name=?, location=?,home_page=? WHERE uuid=?", new SqlExecutor<Object>() {
+            @Override
+            public Object execute(PreparedStatement ps) throws SQLException {
+                ps.setString(1, resume.getFullName());
+                ps.setString(2, resume.getLocation());
+                ps.setString(3, resume.getHomePage());
+                ps.setString(4, resume.getUuid());
+                int countOfChanges = ps.executeUpdate();
+                if (countOfChanges == 0) throw new WebAppException("Resume does not exist");
+                return null;
+            }
+        });
     }
 
     @Override
