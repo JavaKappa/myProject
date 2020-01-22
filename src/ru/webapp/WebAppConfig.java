@@ -35,6 +35,7 @@ public class WebAppConfig {
             if (webAppProp == null) {
                 throw new WebAppException("webapp.properties doest not exist");
             }
+            properties.load(webAppProp);
             storage = new SqlStorage(properties.getProperty("db.url"),
                     properties.getProperty("db.user"),
                     properties.getProperty("db.password"));

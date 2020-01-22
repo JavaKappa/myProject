@@ -22,12 +22,22 @@ public class SqlStorage implements IStorage {
 
     @Override
     public void save(Resume resume) {
-
+        sql.execute("INSERT INTO resume (uuid, full_name, location, home_page) VALUES (?,?,?,?)", new SqlExecutor<Void>() {
+            @Override
+            public Void execute(PreparedStatement ps) throws SQLException {
+                ps.setString(1, resume.getUuid());
+                ps.setString(2, resume.getFullName());
+                ps.setString(3, resume.getLocation());
+                ps.setString(4, resume.getHomePage());
+                ps.executeUpdate();
+                return null;
+            }
+        });
     }
 
     @Override
     public void update(Resume resume) throws WebAppException {
-
+        //sql.execute("UPDATE resume SET )
     }
 
     @Override
@@ -64,21 +74,18 @@ public class SqlStorage implements IStorage {
 
     @Override
     public Collection<Resume> getAllSorted() {
-        return sql.execute("SELECT * FROM resume ORDER BY full_name, uuid", new SqlExecutor<Collection<Resume>>() {
-            @Override
-            public Collection<Resume> execute(PreparedStatement ps) throws SQLException {
-                ResultSet rs = ps.executeQuery();
-                Collection<Resume> resumes = new ArrayList<>();
-                while (rs.next()) {
-                    String uuid = rs.getString("uuid");
-                    String fullname = rs.getString("full_name");
-                    String location = rs.getString("location");
-                    String homePage = rs.getString("home_page");
-                    resumes.add(new Resume(uuid, fullname, location, homePage));
-                }
-
-                return resumes;
+        return sql.execute("SELECT * FROM resume ORDER BY full_name, uuid", ps -> {
+            ResultSet rs = ps.executeQuery();
+            Collection<Resume> resumes = new ArrayList<>();
+            while (rs.next()) {
+                String uuid = rs.getString("uuid");
+                String fullname = rs.getString("full_name");
+                String location = rs.getString("location");
+                String homePage = rs.getString("home_page");
+                resumes.add(new Resume(uuid, fullname, location, homePage));
             }
+
+            return resumes;
         });
     }
 
