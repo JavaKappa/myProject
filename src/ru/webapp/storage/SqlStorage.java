@@ -106,7 +106,7 @@ public class SqlStorage implements IStorage {
         return sql.execute("SELECT count(*) FROM resume", new SqlExecutor<Integer>() {
             @Override
             public Integer execute(PreparedStatement ps) throws SQLException {
-                ResultSet rs = ps.getResultSet();
+                ResultSet rs = ps.executeQuery();
                 rs.next();
                 return rs.getInt(1);
             }

@@ -1,10 +1,10 @@
--- CREATE TABLE resume(
---     uuid CHAR(36) PRIMARY KEY NOT NULL,
---     fullName TEXT NOT NULL,
---     location TEXT NOT NULL
--- );
---
--- ALTER TABLE resume ADD COLUMN homePage TEXT;
+CREATE TABLE resume(
+    uuid CHAR(36) PRIMARY KEY NOT NULL,
+    full_Name TEXT NOT NULL,
+    location TEXT NOT NULL,
+    home_Page TEXT
+);
+
 
 CREATE TABLE contact(
     id SERIAL,
