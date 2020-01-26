@@ -41,8 +41,9 @@ public class SqlStorage implements IStorage {
                         statementContact.setString(1, resume.getUuid());
                         statementContact.setString(2, entry.getKey().getTitle());
                         statementContact.setString(3, entry.getValue());
-                        statementContact.executeUpdate();
+                        statementContact.addBatch();
                     }
+                    statementContact.executeBatch();
                 }
                 conn.commit();
                 return null;
