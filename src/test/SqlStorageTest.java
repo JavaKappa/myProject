@@ -1,11 +1,11 @@
-import ru.webapp.storage.SqlStorage;
+import ru.webapp.WebAppConfig;
 
 /**
  * Капу пк
  * 23.01.2020
  */
-public class SqlStorageTest extends AbstractTest {
+public class SqlStorageTest extends AbstractStorageTest {
     {
-        storage = new SqlStorage("jdbc:postgresql://localhost:5432/postgres", "postgres", "1234");
+        storage = WebAppConfig.get().getStorage();
     }
 }

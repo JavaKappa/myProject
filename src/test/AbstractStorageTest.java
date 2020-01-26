@@ -11,7 +11,7 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
-abstract public class AbstractTest {
+abstract public class AbstractStorageTest {
     protected Resume R1, R2, R3;
 
     protected IStorage storage;
@@ -21,11 +21,11 @@ abstract public class AbstractTest {
     public void before() {
         R1 = new Resume("Полное Имя1", "location1");
         R1.addContact(ContactType.MAIL, "mail1@ya.ru");
-        R1.addContact(ContactType.PHONE, "11111");
-        R1.addContact(ContactType.PHONE, "11111");
+//        R1.addContact(ContactType.PHONE, "11111");
+//        R1.addContact(ContactType.PHONE, "11111");
         R2 = new Resume("Полное Имя2", "Location1");
-        R2.addContact(ContactType.SKYPE, "skype2");
-        R2.addContact(ContactType.PHONE, "22222");
+//        R2.addContact(ContactType.SKYPE, "skype2");
+//        R2.addContact(ContactType.PHONE, "22222");
         R3 = new Resume("Полное Имя3", "");
         if (storage.isSectionSupported()) {
             R3.addSection(SectionType.OBJECTIVE, new TextSection(SectionType.OBJECTIVE, "zzz"));
@@ -64,8 +64,6 @@ abstract public class AbstractTest {
     public void load() {
 
         Resume load = storage.load(R1.getUuid());
-        System.out.println(load);
-        System.out.println(R1);
         assertEquals(R1, load);
         assertEquals(R2, storage.load(R2.getUuid()));
         assertEquals(R3, storage.load(R3.getUuid()));

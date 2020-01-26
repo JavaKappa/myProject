@@ -45,7 +45,7 @@
                 <%=HtmlUtil.getContact(resume, type)%><br>
         </c:forEach>
 
-    <p>
+    </p>
     <table cellpadding="8">
         <c:forEach var="entry" items="${resume.sections.entrySet()}">
             <jsp:useBean id="entry" type="java.util.Map.Entry"/>

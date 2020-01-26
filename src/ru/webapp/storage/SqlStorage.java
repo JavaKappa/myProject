@@ -1,14 +1,17 @@
 package ru.webapp.storage;
 
 import ru.webapp.WebAppException;
+import ru.webapp.model.ContactType;
 import ru.webapp.model.Resume;
 import ru.webapp.sql.Sql;
 import ru.webapp.sql.SqlExecutor;
+import ru.webapp.sql.SqlTransaction;
 
 import java.nio.file.WatchEvent;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Капу пк
@@ -23,17 +26,39 @@ public class SqlStorage implements IStorage {
 
     @Override
     public void save(Resume resume) {
-        sql.execute("INSERT INTO resume (uuid, full_name, location, home_page) VALUES (?,?,?,?)", new SqlExecutor<Void>() {
+        sql.execute(new SqlTransaction<Object>() {
             @Override
-            public Void execute(PreparedStatement ps) throws SQLException {
-                ps.setString(1, resume.getUuid());
-                ps.setString(2, resume.getFullName());
-                ps.setString(3, resume.getLocation());
-                ps.setString(4, resume.getHomePage());
-                ps.execute();
+            public Object execute(Connection conn) throws SQLException {
+                try (PreparedStatement statementResume = conn.prepareStatement("INSERT INTO resume (uuid, full_name, location, home_page) VALUES (?,?,?,?)")) {
+                    statementResume.setString(1, resume.getUuid());
+                    statementResume.setString(2, resume.getFullName());
+                    statementResume.setString(3, resume.getLocation());
+                    statementResume.setString(4, resume.getHomePage());
+                    statementResume.executeUpdate();
+                }
+                try (PreparedStatement statementContact = conn.prepareStatement("INSERT INTO contact (resume_uuid, type, value) VALUES (?,?,?)")) {
+                    for (Map.Entry<ContactType, String> entry : resume.getContacts().entrySet()) {
+                        statementContact.setString(1, resume.getUuid());
+                        statementContact.setString(2, entry.getKey().getTitle());
+                        statementContact.setString(3, entry.getValue());
+                        statementContact.executeUpdate();
+                    }
+                }
+                conn.commit();
                 return null;
             }
         });
+//        sql.execute("INSERT INTO resume (uuid, full_name, location, home_page) VALUES (?,?,?,?)", new SqlExecutor<Void>() {
+//            @Override
+//            public Void execute(PreparedStatement ps) throws SQLException {
+//                ps.setString(1, resume.getUuid());
+//                ps.setString(2, resume.getFullName());
+//                ps.setString(3, resume.getLocation());
+//                ps.setString(4, resume.getHomePage());
+//                ps.execute();
+//                return null;
+//            }
+//        });
     }
 
     @Override
@@ -74,7 +99,6 @@ public class SqlStorage implements IStorage {
             ps.setString(1, uuid);
             int countOChanges = ps.executeUpdate();
             if (countOChanges == 0) throw new WebAppException("Resume " + uuid + " does not exists");
-
             return null;
         });
     }
@@ -106,7 +130,7 @@ public class SqlStorage implements IStorage {
         return sql.execute("SELECT count(*) FROM resume", new SqlExecutor<Integer>() {
             @Override
             public Integer execute(PreparedStatement ps) throws SQLException {
-                ResultSet rs = ps.getResultSet();
+                ResultSet rs = ps.executeQuery();
                 rs.next();
                 return rs.getInt(1);
             }
