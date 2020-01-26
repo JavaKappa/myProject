@@ -16,6 +16,7 @@ import java.io.IOException;
 
 public class ResumeServlet extends javax.servlet.http.HttpServlet {
     public static IStorage storage = WebAppConfig.get().getStorage();
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         String uuid = request.getParameter("uuid");
@@ -53,7 +54,7 @@ public class ResumeServlet extends javax.servlet.http.HttpServlet {
         }
         response.sendRedirect("list");
     }
-
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String uuid = request.getParameter("uuid");
         String action = request.getParameter("action");
