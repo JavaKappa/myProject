@@ -1,8 +1,5 @@
-<%@ page import="ru.webapp.storage.XmlStorage" %>
 <%@ page import="ru.webapp.web.HtmlUtil" %>
 <%@ page import="ru.webapp.model.ContactType" %>
-<%@ page import="ru.webapp.storage.FileStorage" %>
-<%@ page import="ru.webapp.storage.SerializeFileStorage" %>
 <%@ page import="ru.webapp.web.ResumeServlet" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>

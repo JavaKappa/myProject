@@ -1,6 +1,5 @@
 package ru.webapp.sql;
 import ru.webapp.WebAppException;
-import org.postgresql.*;
 import java.sql.*;
 
 public class Sql {
@@ -28,7 +27,6 @@ public class Sql {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             return executor.execute(ps);
         } catch (SQLException e) {
-//            System.out.println(e);
             throw new WebAppException("sql fail" + sql, e);
         }
     }

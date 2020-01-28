@@ -7,7 +7,6 @@ import ru.webapp.sql.Sql;
 import ru.webapp.sql.SqlExecutor;
 import ru.webapp.sql.SqlTransaction;
 
-import java.nio.file.WatchEvent;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,72 +25,70 @@ public class SqlStorage implements IStorage {
 
     @Override
     public void save(Resume resume) {
-        sql.execute(new SqlTransaction<Object>() {
-            @Override
-            public Object execute(Connection conn) throws SQLException {
-                try (PreparedStatement statementResume = conn.prepareStatement("INSERT INTO resume (uuid, full_name, location, home_page) VALUES (?,?,?,?)")) {
-                    statementResume.setString(1, resume.getUuid());
-                    statementResume.setString(2, resume.getFullName());
-                    statementResume.setString(3, resume.getLocation());
-                    statementResume.setString(4, resume.getHomePage());
-                    statementResume.executeUpdate();
-                }
-                try (PreparedStatement statementContact = conn.prepareStatement("INSERT INTO contact (resume_uuid, type, value) VALUES (?,?,?)")) {
-                    for (Map.Entry<ContactType, String> entry : resume.getContacts().entrySet()) {
-                        statementContact.setString(1, resume.getUuid());
-                        statementContact.setString(2, entry.getKey().getTitle());
-                        statementContact.setString(3, entry.getValue());
-                        statementContact.addBatch();
-                    }
-                    statementContact.executeBatch();
-                }
-                conn.commit();
-                return null;
+        sql.execute(conn -> {
+            try (PreparedStatement statementResume = conn.prepareStatement("INSERT INTO resume (uuid, full_name, location, home_page) VALUES (?,?,?,?)")) {
+                statementResume.setString(1, resume.getUuid());
+                statementResume.setString(2, resume.getFullName());
+                statementResume.setString(3, resume.getLocation());
+                statementResume.setString(4, resume.getHomePage());
+                statementResume.executeUpdate();
             }
-        });
-//        sql.execute("INSERT INTO resume (uuid, full_name, location, home_page) VALUES (?,?,?,?)", new SqlExecutor<Void>() {
-//            @Override
-//            public Void execute(PreparedStatement ps) throws SQLException {
-//                ps.setString(1, resume.getUuid());
-//                ps.setString(2, resume.getFullName());
-//                ps.setString(3, resume.getLocation());
-//                ps.setString(4, resume.getHomePage());
-//                ps.execute();
-//                return null;
-//            }
-//        });
-    }
-
-    @Override
-    public void update(Resume resume) throws WebAppException {
-        sql.execute("UPDATE resume SET full_name=?, location=?,home_page=? WHERE uuid=?", new SqlExecutor<Object>() {
-            @Override
-            public Object execute(PreparedStatement ps) throws SQLException {
-                ps.setString(1, resume.getFullName());
-                ps.setString(2, resume.getLocation());
-                ps.setString(3, resume.getHomePage());
-                ps.setString(4, resume.getUuid());
-                int countOfChanges = ps.executeUpdate();
-                if (countOfChanges == 0) throw new WebAppException("Resume does not exist");
-                return null;
-            }
+            SqlStorage.this.insertContact(conn, resume);
+            return null;
         });
     }
 
     @Override
     public Resume load(final String uuid) {
-        return sql.execute("SELECT * FROM resume r WHERE r.uuid = ?", ps -> {
-            ps.setString(1, uuid);
-            ResultSet rs = ps.executeQuery();
-            //QUESTION ABOUT THIS
-            if (!rs.next()) throw new WebAppException("Resume " + uuid + " does not exists");
-
-            String fullname = rs.getString("full_name");
-            String location = rs.getString("location");
-            String homePage = rs.getString("home_page");
-            return new Resume(uuid, fullname, location, homePage);
+        return sql.execute(conn -> {
+            Resume r;
+            try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM resume r WHERE r.uuid = ?")) {
+                ps.setString(1, uuid);
+                ResultSet rs = ps.executeQuery();
+                if (!rs.next()) throw new WebAppException("Resume " + uuid + " does not exists");
+                String fullname = rs.getString("full_name");
+                String location = rs.getString("location");
+                String homePage = rs.getString("home_page");
+                r = new Resume(uuid, fullname, location, homePage);
+            }
+            try (PreparedStatement psForCont = conn.prepareStatement("SELECT * FROM contact WHERE resume_uuid = ?")) {
+                psForCont.setString(1, uuid);
+                ResultSet resultSet = psForCont.executeQuery();
+                while (resultSet.next()) {
+                    ContactType type = ContactType.valueOf(resultSet.getString("type"));
+                    String value = resultSet.getString("value");
+                    r.addContact(type, value);
+                }
+            }
+            return r;
         });
+//        return sql.execute("SELECT * FROM resume r WHERE r.uuid = ?", ps -> {
+//            ps.setString(1, uuid);
+//            ResultSet rs = ps.executeQuery();
+//            //QUESTION ABOUT THIS
+//            if (!rs.next()) throw new WebAppException("Resume " + uuid + " does not exists");
+//
+//            String fullname = rs.getString("full_name");
+//            String location = rs.getString("location");
+//            String homePage = rs.getString("home_page");
+//            return new Resume(uuid, fullname, location, homePage);
+//        });
+    }
 
+    @Override
+    public void update(Resume resume) throws WebAppException {
+        sql.execute(conn -> {
+            try (PreparedStatement statementResume = conn.prepareStatement("UPDATE resume SET full_name=?, location=?,home_page=? WHERE uuid=?")) {
+                statementResume.setString(1, resume.getFullName());
+                statementResume.setString(2, resume.getLocation());
+                statementResume.setString(3, resume.getHomePage());
+                statementResume.setString(4, resume.getUuid());
+                if (statementResume.executeUpdate() == 0) throw new WebAppException("Resume  does not exist");
+            }
+            deleteContacts(conn, resume);
+            SqlStorage.this.insertContact(conn, resume);
+            return null;
+        });
     }
 
     @Override
@@ -136,6 +133,26 @@ public class SqlStorage implements IStorage {
                 return rs.getInt(1);
             }
         });
+    }
+
+    private void insertContact(Connection conn, Resume resume) throws SQLException {
+        String uuid = resume.getUuid();
+        try (PreparedStatement statementContact = conn.prepareStatement("INSERT INTO contact (resume_uuid, type, value) VALUES (?,?,?)")) {
+            for (Map.Entry<ContactType, String> entry : resume.getContacts().entrySet()) {
+                statementContact.setString(1, resume.getUuid());
+                statementContact.setString(2, entry.getKey().name());
+                statementContact.setString(3, entry.getValue());
+                statementContact.addBatch();
+            }
+            statementContact.executeBatch();
+        }
+    }
+
+    private void deleteContacts(Connection conn, Resume resume) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement("DELETE FROM contact WHERE resume_uuid = ?")) {
+            ps.setString(1, resume.getUuid());
+            ps.execute();
+        }
     }
 
     @Override
