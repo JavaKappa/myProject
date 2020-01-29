@@ -63,7 +63,6 @@ abstract public class AbstractStorageTest {
 
     @Test
     public void load() {
-
         Resume load = storage.load(R1.getUuid());
         System.out.println(load);
         System.out.println(R1);
